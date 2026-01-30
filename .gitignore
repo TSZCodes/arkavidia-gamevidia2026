@@ -1,3 +1,23 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# .gitignore
+
+# Godot 4+ specific ignores
+.godot/
+*.translation
+
+# Android/IOS export artifacts
+android/
+ios/
+
+# Editor UI layout settings (optional, but recommended to ignore)
+*.import
+export_presets.cfg
+
+# Mono/C# ignores (if you use C# version)
+.mono/
+.vscode/
+*.sln
+*.csproj
