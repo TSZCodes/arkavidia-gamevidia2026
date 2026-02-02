@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://bclalh2f05j8x"]
+
+[ext_resource type="Script" uid="uid://duu3kmqc1hnij" path="res://Scripts/market_manager.gd" id="1_jjvhh"]
+[ext_resource type="Script" uid="uid://dlrmnpmkrvm0l" path="res://Scripts/stock_data.gd" id="2_kry3j"]
+[ext_resource type="Resource" uid="uid://ckdwwctp6k2ss" path="res://Resource/crypto_btc.tres" id="3_hptm8"]
+[ext_resource type="Resource" uid="uid://dva2nnknye43k" path="res://Resource/crypto_doge.tres" id="4_d1ilt"]
+[ext_resource type="Resource" uid="uid://cs4odxef0p2ik" path="res://Resource/crypto_eth.tres" id="5_6iyac"]
+[ext_resource type="Script" uid="uid://d1qa37txltskt" path="res://Scripts/debug_hud.gd" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://d3055lycv08re" path="res://Scenes/CryptoDashboard.tscn" id="6_21xkr"]
+[ext_resource type="Resource" uid="uid://blqk5jx13g1gd" path="res://Resource/stock_apple.tres" id="6_fdnlq"]
+[ext_resource type="Resource" uid="uid://dbutnv0gc383w" path="res://Resource/stock_nvidia.tres" id="7_jkdf5"]
+[ext_resource type="Resource" uid="uid://ddo4emnvthig3" path="res://Resource/stock_tesla.tres" id="8_wsu2k"]
+[ext_resource type="Script" uid="uid://bws8k7fh2l6yo" path="res://Scripts/news_manager.gd" id="9_news"]
+[ext_resource type="Script" uid="uid://c8v8q8q8q8q8" path="res://Scripts/event_bus.gd" id="10_event"]
+
+[node name="Main" type="Node2D" unique_id=1860880438]
+
+[node name="MarketManager" type="Node2D" parent="." unique_id=2063811001]
+script = ExtResource("1_jjvhh")
+all_possible_stocks = Array[ExtResource("2_kry3j")]([ExtResource("3_hptm8"), ExtResource("4_d1ilt"), ExtResource("5_6iyac"), ExtResource("6_fdnlq"), ExtResource("7_jkdf5"), ExtResource("8_wsu2k")])
+
+[node name="NewsManager" type="Node" parent="." unique_id=1234567890]
+script = ExtResource("9_news")
+
+[node name="EventBus" type="Node" parent="." unique_id=999999999]
+script = ExtResource("10_event")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=337188387]
+
+[node name="CryptoDashboard" parent="CanvasLayer" unique_id=1836389153 node_paths=PackedStringArray("market_manager") instance=ExtResource("6_21xkr")]
+market_manager = NodePath("../../MarketManager")
+
+[node name="DebugHUD" type="Control" parent="CanvasLayer" unique_id=588812576 node_paths=PackedStringArray("market_manager", "money_label", "debt_label", "day_label", "stock_container", "pay_debt_btn")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_kry3j")
+market_manager = NodePath("../../MarketManager")
+money_label = NodePath("VBoxContainer/LblMoney")
+debt_label = NodePath("VBoxContainer/LblDebt")
+day_label = NodePath("VBoxContainer/LblDay")
+stock_container = NodePath("VBoxContainer/StockList")
+pay_debt_btn = NodePath("VBoxContainer/BtnPayDebt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/DebugHUD" unique_id=580434231]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 9.0
+offset_right = 310.0
+offset_bottom = 125.0
+
+[node name="NextDay" type="Button" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=1628257516]
+layout_mode = 2
+text = "NEXT DAY"
+
+[node name="LblMoney" type="Label" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=175750609]
+layout_mode = 2
+text = "CASH: $0"
+
+[node name="LblDebt" type="Label" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=1902862514]
+layout_mode = 2
+text = "DEBT: $0"
+
+[node name="LblDay" type="Label" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=519405746]
+layout_mode = 2
+text = "DAY: 1"
+
+[node name="BtnPayDebt" type="Button" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=1284527712]
+layout_mode = 2
+text = "PAY DEBT ($500)"
+
+[node name="StockList" type="VBoxContainer" parent="CanvasLayer/DebugHUD/VBoxContainer" unique_id=1155894098]
+layout_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/DebugHUD/VBoxContainer/NextDay" to="CanvasLayer/DebugHUD" method="_on_next_day_pressed"]

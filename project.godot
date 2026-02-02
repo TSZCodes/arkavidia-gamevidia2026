@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="Gamevidia-2026"
+run/main_scene="uid://bclalh2f05j8x"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*uid://d23wvl8bfhtve"
+EventBus="*uid://clyrr01ejohpe"
 
 [physics]
 
