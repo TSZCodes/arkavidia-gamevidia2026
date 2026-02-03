@@ -10,18 +10,32 @@ const words: Array[String] = [
 var player_inputs: Array[String] = []
 var current_word: String = ""
 var on_done: bool = false
+var template_word : String
 
 func _ready() -> void:
-	change_word()
+	on_done = true
+	template_word = change_word()
+	label_template.text = template_word
+	on_done = false
 
 func _process(_delta: float) -> void:
 	label_player.text = "".join(player_inputs)
 	
 	# Check if typing is complete
+	var max_length = max(template_word.length(), label_player.text.length())
+	if label_player.text.length() > 0:
+		for i in range(max_length):
+			var char1 = label_player.text[i] if i < label_player.text.length() else ""
+			var char2 = template_word[i] if i < template_word.length() else ""
+			if char1 != char2:
+				print("Wrong chara at %d!" % [i])
+		
 	if label_player.text == current_word:
 		on_done = true
 		await get_tree().create_timer(0.5).timeout
 		label_player.text = ""
+		template_word = change_word()
+		label_template.text = template_word
 		player_inputs.clear()
 		change_word()
 		on_done = false
