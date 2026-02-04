@@ -2,18 +2,118 @@
 
 [ext_resource type="Script" uid="uid://dxr6ofo8h2llm" path="res://Scripts/type_minigame.gd" id="1_6r85y"]
 
-[node name="typeMinigame" type="Node2D" unique_id=379044168 node_paths=PackedStringArray("label_template", "label_player")]
+[node name="typeMinigame" type="Control" node_paths=PackedStringArray("word_display")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_6r85y")
-label_template = NodePath("labelTemplate")
-label_player = NodePath("labelPlayer")
+word_display = NodePath("CenterContainer/Panel/Margin/VBox/WordContainer/LabelWrapper/RichTextLabel")
 
-[node name="labelTemplate" type="Label" parent="." unique_id=1764888605]
-offset_right = 117.0
-offset_bottom = 23.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 32
+[node name="BackgroundOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.08, 0.85)
 
-[node name="labelPlayer" type="Label" parent="." unique_id=162437679]
-offset_right = 118.0
-offset_bottom = 45.0
-theme_override_font_sizes/font_size = 32
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+
+[node name="Bg" type="ColorRect" parent="CenterContainer/Panel"]
+layout_mode = 2
+color = Color(0.1, 0.12, 0.15, 1)
+
+[node name="Border" type="ReferenceRect" parent="CenterContainer/Panel"]
+layout_mode = 2
+border_color = Color(0.2, 0.8, 0.4, 1)
+border_width = 2.0
+editor_only = false
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "SYSTEM OVERRIDE"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+
+[node name="WordContainer" type="PanelContainer" parent="CenterContainer/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="Bg" type="ColorRect" parent="CenterContainer/Panel/Margin/VBox/WordContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="LabelWrapper" type="CenterContainer" parent="CenterContainer/Panel/Margin/VBox/WordContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/Panel/Margin/VBox/WordContainer/LabelWrapper"]
+clip_contents = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center][color=#44ff44]ALGO[/color][color=#ffffff]RITHM[/color][/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Instructions" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 10
+text = "Type code..."
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxButtons" type="HBoxContainer" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="ExitBtn" type="Button" parent="CenterContainer/Panel/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "ABORT"
+
+[node name="SkipBtn" type="Button" parent="CenterContainer/Panel/Margin/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "AUTO >>"
+
+[connection signal="pressed" from="CenterContainer/Panel/Margin/VBox/HBoxButtons/ExitBtn" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/Margin/VBox/HBoxButtons/SkipBtn" to="." method="_on_skip_pressed"]

@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dblvmhmbk0njc"]
+
+[ext_resource type="Script" uid="uid://dg2jf47g5yxpm" path="res://Scripts/post.gd" id="1_8dpai"]
+[ext_resource type="Texture2D" uid="uid://cnqd7fsiechcs" path="res://icon.svg" id="1_jgmso"]
+
+[sub_resource type="Theme" id="Theme_jgmso"]
+MarginContainer/constants/margin_bottom = 4
+MarginContainer/constants/margin_left = 4
+MarginContainer/constants/margin_right = 4
+MarginContainer/constants/margin_top = 4
+
+[node name="MarginContainer" type="Control" unique_id=1516818183]
+layout_mode = 3
+anchor_right = 0.5
+anchor_bottom = 0.30864197
+theme = SubResource("Theme_jgmso")
+script = ExtResource("1_8dpai")
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2136543792]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AuthorLabel" type="Label" parent="." unique_id=1595646135]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.097222224
+anchor_top = 0.02
+anchor_right = 0.9930556
+anchor_bottom = 0.135
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Author"
+
+[node name="AccountLabel" type="Label" parent="." unique_id=34163431]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.097222224
+anchor_top = 0.135
+anchor_right = 0.9930556
+anchor_bottom = 0.25
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "@account"
+
+[node name="Avatar" type="TextureRect" parent="." unique_id=195503464]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0069444445
+anchor_top = 0.02
+anchor_right = 0.09375
+anchor_bottom = 0.27
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("1_jgmso")
+expand_mode = 1
+
+[node name="Content" type="Label" parent="." unique_id=560050106]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 66.0
+offset_right = 572.0
+offset_bottom = 196.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Lorem Ipsum sit Dolor Amet"

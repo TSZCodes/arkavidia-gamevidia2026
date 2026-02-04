@@ -1,6 +1,7 @@
 extends Node
 
 # Signals
+@warning_ignore_start("unused_signal")
 signal money_changed(new_amount)
 signal day_changed(new_day)
 signal debt_changed(new_debt)

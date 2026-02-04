@@ -32,7 +32,7 @@ func _ready() -> void:
 	_apply_visual_styling()
 	if candle_chart:
 		candle_chart.position = Vector2.ZERO
-	if trading_panel: trading_panel.visible = false
+	if trading_panel: trading_panel.visible = true 
 	add_to_group("dashboard")
 	
 	if not GameManager.money_changed.is_connected(_update_ui):
@@ -88,13 +88,11 @@ func _setup_top_buttons() -> void:
 	for b in btns:
 		_remove_focus(b)
 
-# --- REFACTORED SIDEBAR GENERATION ---
 func _on_hamburger_btn_pressed() -> void:
 	var side_drawer = find_child("SideDrawer", true, false)
 	var drawer_list = find_child("DrawerList", true, false)
 	var drawer_panel = find_child("DrawerPanel", true, false)
 	if not side_drawer or not drawer_list: return
-	
 	
 	for child in drawer_list.get_children():
 		child.queue_free()
@@ -103,13 +101,11 @@ func _on_hamburger_btn_pressed() -> void:
 		for i in range(market_manager.active_stocks.size()):
 			var stock = market_manager.active_stocks[i]
 			
-			# Base Button (Card Container)
 			var btn = Button.new()
 			btn.custom_minimum_size.y = 65
 			btn.toggle_mode = true
 			btn.button_pressed = (i == selected_stock_index)
 			
-			# Styles (Dark Card look)
 			var base_col = Color(0.16, 0.16, 0.20)
 			if i == selected_stock_index: base_col = Color(0.2, 0.22, 0.28)
 			
@@ -128,13 +124,11 @@ func _on_hamburger_btn_pressed() -> void:
 			btn.add_theme_stylebox_override("pressed", style_pressed)
 			_remove_focus(btn)
 			
-			# Connect Click
 			btn.pressed.connect(_on_drawer_item_selected.bind(i))
 			
-			# Layout Container inside Button
 			var margin = MarginContainer.new()
 			margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-			margin.add_theme_constant_override("margin_left", 0) # Strip touches edge
+			margin.add_theme_constant_override("margin_left", 0)
 			margin.add_theme_constant_override("margin_top", 0)
 			margin.add_theme_constant_override("margin_right", 15)
 			margin.add_theme_constant_override("margin_bottom", 0)
@@ -144,25 +138,21 @@ func _on_hamburger_btn_pressed() -> void:
 			h_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			h_box.add_theme_constant_override("separation", 12)
 			
-			# Category Color Strip (Left Edge)
 			var strip = ColorRect.new()
 			strip.custom_minimum_size.x = 4
 			strip.color = _get_category_color(stock.category)
 			strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			
-			# Text Info Container
 			var info_vbox = VBoxContainer.new()
 			info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			info_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 			info_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			
-			# Symbol Row (Top)
 			var symbol_lbl = Label.new()
 			symbol_lbl.text = stock.symbol
 			symbol_lbl.add_theme_font_size_override("font_size", 15)
 			symbol_lbl.add_theme_color_override("font_color", Color.WHITE)
 			
-			# Name Row (Bottom)
 			var name_lbl = Label.new()
 			name_lbl.text = stock.company_name
 			name_lbl.add_theme_font_size_override("font_size", 11)
@@ -172,7 +162,6 @@ func _on_hamburger_btn_pressed() -> void:
 			info_vbox.add_child(symbol_lbl)
 			info_vbox.add_child(name_lbl)
 			
-			# C. Price Container (Right Side)
 			var price_vbox = VBoxContainer.new()
 			price_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 			price_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -185,7 +174,6 @@ func _on_hamburger_btn_pressed() -> void:
 			
 			price_vbox.add_child(price_lbl)
 			
-			# Optional: Show "Owned" indicator if player has stock
 			var owned_qty = GameManager.portfolio.get(stock.company_name, 0.0)
 			if owned_qty > 0.0001:
 				var own_lbl = Label.new()
@@ -195,10 +183,8 @@ func _on_hamburger_btn_pressed() -> void:
 				own_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 				price_vbox.add_child(own_lbl)
 			
-			# Assemble
 			h_box.add_child(strip)
 			
-			# Spacer after strip
 			var spacer_strip = Control.new()
 			spacer_strip.custom_minimum_size.x = 8
 			spacer_strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -219,16 +205,15 @@ func _on_hamburger_btn_pressed() -> void:
 		tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		tween.tween_property(drawer_panel, "position:x", 0.0, 0.3)
 
-# Helper for colorful strips based on category
 func _get_category_color(category: String) -> Color:
 	match category:
-		"Teknologi & Media": return Color(0.3, 0.6, 0.9) # Blue
-		"Energi & SDA": return Color(0.9, 0.7, 0.2) # Yellow/Orange
-		"Perbankan & Keuangan": return Color(0.2, 0.8, 0.4) # Green
-		"Infrastruktur": return Color(0.6, 0.6, 0.6) # Gray
-		"Konsumsi & Retail": return Color(0.9, 0.4, 0.6) # Pink
-		"Transportasi": return Color(0.4, 0.8, 0.9) # Cyan
-		"Kesehatan": return Color(0.9, 0.3, 0.3) # Red
+		"Teknologi & Media": return Color(0.3, 0.6, 0.9)
+		"Energi & SDA": return Color(0.9, 0.7, 0.2)
+		"Perbankan & Keuangan": return Color(0.2, 0.8, 0.4)
+		"Infrastruktur": return Color(0.6, 0.6, 0.6)
+		"Konsumsi & Retail": return Color(0.9, 0.4, 0.6)
+		"Transportasi": return Color(0.4, 0.8, 0.9)
+		"Kesehatan": return Color(0.9, 0.3, 0.3)
 		_: return Color.WHITE
 
 func _on_drawer_item_selected(id: int) -> void:
@@ -415,6 +400,37 @@ func _on_minigame_won() -> void:
 	_on_notification_received("Accessing Insider Network...")
 	await get_tree().create_timer(0.5).timeout
 	market_manager.generate_insider_news()
+
+func _on_social_game_pressed() -> void:
+	if active_minigame_layer != null and is_instance_valid(active_minigame_layer):
+		_on_notification_received("Minigame already active!")
+		return
+		
+	var game = preload("res://Scenes/social_engineering_game.tscn").instantiate()
+	
+	active_minigame_layer = CanvasLayer.new() 
+	active_minigame_layer.layer = 10
+	active_minigame_layer.add_child(game)
+	
+	if game.has_signal("game_finished"):
+		game.game_finished.connect(_on_social_game_finished)
+	
+	game.tree_exited.connect(func():
+		if is_instance_valid(active_minigame_layer):
+			active_minigame_layer.queue_free()
+		active_minigame_layer = null
+	)
+	
+	get_tree().root.add_child(active_minigame_layer)
+
+func _on_social_game_finished(success: bool) -> void:
+	if success:
+		_on_notification_received("Social Engineering Successful! Market Trend Manipulated.")
+		var idx = randi() % market_manager.active_stocks.size()
+		if market_manager.has_method("apply_insider_info"):
+			market_manager.apply_insider_info(idx, 0.15) 
+	else:
+		_on_notification_received("Social Engineering Failed! You were blocked.")
 
 func _on_slider_value_changed(value: float) -> void:
 	if slider_label: slider_label.text = str(int(value)) + "%"
@@ -647,6 +663,7 @@ func rebuild_lists() -> void:
 				_remove_focus(btn)
 				btn.pressed.connect(_on_stock_selected.bind(idx))
 				
+				# Layout inside button
 				var margin = MarginContainer.new()
 				margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 				margin.add_theme_constant_override("margin_left", 12)
@@ -657,7 +674,8 @@ func rebuild_lists() -> void:
 				
 				var hbox = HBoxContainer.new()
 				hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+				
+				# LEFT: Symbol + Name
 				var vbox_left = VBoxContainer.new()
 				vbox_left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 				vbox_left.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -666,6 +684,7 @@ func rebuild_lists() -> void:
 				var lbl_symbol = Label.new()
 				lbl_symbol.text = stock.symbol
 				lbl_symbol.add_theme_font_size_override("font_size", 16)
+				# Fake bold by color brightness
 				lbl_symbol.add_theme_color_override("font_color", Color(1, 1, 1)) 
 				
 				var lbl_name = Label.new()
@@ -677,6 +696,7 @@ func rebuild_lists() -> void:
 				vbox_left.add_child(lbl_symbol)
 				vbox_left.add_child(lbl_name)
 				
+				# RIGHT: Price + Change%
 				var vbox_right = VBoxContainer.new()
 				vbox_right.alignment = BoxContainer.ALIGNMENT_CENTER
 				vbox_right.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -686,7 +706,7 @@ func rebuild_lists() -> void:
 				lbl_price.add_theme_font_size_override("font_size", 14)
 				lbl_price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 				
-				
+				# Calc Change
 				var prev_price = stock.price_history.back() if not stock.price_history.is_empty() else stock.current_price
 				var change = 0.0
 				if prev_price != 0:
@@ -714,6 +734,7 @@ func _on_stock_selected(index: int) -> void:
 	selected_stock_index = index
 	trading_panel.visible = true
 	
+	# Update visual selection in list immediately
 	rebuild_lists()
 	
 	var stock = market_manager.active_stocks[index]

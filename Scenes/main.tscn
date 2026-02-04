@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://duu3kmqc1hnij" path="res://Scripts/market_manager.gd" id="1_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://d3055lycv08re" path="res://Scenes/CryptoDashboard.tscn" id="6_21xkr"]
-[ext_resource type="Script" uid="uid://c8v8q8q8q8q8" path="res://Scripts/event_bus.gd" id="10_event"]
+[ext_resource type="Script" uid="uid://clyrr01ejohpe" path="res://Scripts/event_bus.gd" id="10_event"]
 
 [node name="Main" type="Node2D" unique_id=1860880438]
 

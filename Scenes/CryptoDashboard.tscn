@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dhay62pyimkar" path="res://Scripts/crypto_dashboard.gd" id="1_ijr2s"]
 [ext_resource type="Script" uid="uid://csmjlpqlijv2v" path="res://Scripts/candle_chart.gd" id="2_candle"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panels"]
+
 [node name="CryptoDashboard" type="Control" unique_id=1836389153 node_paths=PackedStringArray("stock_list_container", "wallet_label", "debt_label", "trading_panel", "header_label", "price_label", "owned_label", "candle_chart", "input_usd", "amount_slider", "slider_label", "news_vbox_panel")]
 layout_mode = 3
 anchors_preset = 15
@@ -11,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ijr2s")
-stock_list_container = NodePath("RootVBox/MainLayout/LeftPanel/MarketPanel/MarginContainer/MarketVBox/TabContainer/Stocks/StockListVBox")
+stock_list_container = NodePath("SideDrawer/DrawerPanel/Margin/VBox/Scroll/DrawerList")
 wallet_label = NodePath("RootVBox/TopBar/MarginContainer/HBoxContainer/WalletLabel")
 debt_label = NodePath("RootVBox/TopBar/MarginContainer/HBoxContainer/DebtLabel")
 trading_panel = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel")
@@ -46,6 +48,7 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
 
 [node name="TopBarBg" type="ColorRect" parent="RootVBox/TopBar" unique_id=999999991]
 layout_mode = 2
@@ -136,45 +139,10 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.4
 theme_override_constants/separation = 10
 
-[node name="MarketPanel" type="PanelContainer" parent="RootVBox/MainLayout/LeftPanel" unique_id=1698435006]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarketBg" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/MarketPanel" unique_id=999999993]
-layout_mode = 2
-color = Color(0.13, 0.13, 0.16, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RootVBox/MainLayout/LeftPanel/MarketPanel" unique_id=1511360938]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="MarketVBox" type="VBoxContainer" parent="RootVBox/MainLayout/LeftPanel/MarketPanel/MarginContainer" unique_id=1698435008]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="TabContainer" type="TabContainer" parent="RootVBox/MainLayout/LeftPanel/MarketPanel/MarginContainer/MarketVBox" unique_id=1695128872]
-layout_mode = 2
-size_flags_vertical = 3
-current_tab = 0
-tabs_visible = false
-
-[node name="Stocks" type="ScrollContainer" parent="RootVBox/MainLayout/LeftPanel/MarketPanel/MarginContainer/MarketVBox/TabContainer" unique_id=360253453]
-layout_mode = 2
-size_flags_vertical = 3
-metadata/_tab_index = 1
-
-[node name="StockListVBox" type="VBoxContainer" parent="RootVBox/MainLayout/LeftPanel/MarketPanel/MarginContainer/MarketVBox/TabContainer/Stocks" unique_id=1156616104]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 5
-
 [node name="TradingPanel" type="PanelContainer" parent="RootVBox/MainLayout/LeftPanel" unique_id=563195989]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
 
 [node name="TradingBg" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/TradingPanel" unique_id=999999994]
 layout_mode = 2
@@ -412,6 +380,7 @@ theme_override_constants/separation = 10
 [node name="NewsPanel" type="PanelContainer" parent="RootVBox/MainLayout/RightPanel" unique_id=802197892]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
 
 [node name="NewsBg" type="ColorRect" parent="RootVBox/MainLayout/RightPanel/NewsPanel" unique_id=999999997]
 layout_mode = 2
@@ -457,6 +426,7 @@ autowrap_mode = 2
 [node name="MinigamePanel" type="PanelContainer" parent="RootVBox/MainLayout/RightPanel" unique_id=802197897]
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
 
 [node name="MinigameBg" type="ColorRect" parent="RootVBox/MainLayout/RightPanel/MinigamePanel" unique_id=999999998]
 layout_mode = 2
@@ -487,34 +457,15 @@ theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 14
 text = "TYPING MINIGAME"
 
+[node name="SocialGameBtn" type="Button" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197999]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "SOCIAL ENGINEERING"
+
 [node name="HSeparator" type="HSeparator" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
 layout_mode = 2
-
-[node name="SpoilerPanel" type="PanelContainer" parent="RootVBox/MainLayout/RightPanel" unique_id=802197902]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-
-[node name="SpoilerBg" type="ColorRect" parent="RootVBox/MainLayout/RightPanel/SpoilerPanel" unique_id=1920558199]
-layout_mode = 2
-color = Color(0.18, 0.1, 0.1, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RootVBox/MainLayout/RightPanel/SpoilerPanel" unique_id=816361360]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="SpoilerVBox" type="VBoxContainer" parent="RootVBox/MainLayout/RightPanel/SpoilerPanel/MarginContainer" unique_id=802197904]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="SpoilerLabel" type="Label" parent="RootVBox/MainLayout/RightPanel/SpoilerPanel/MarginContainer/SpoilerVBox" unique_id=802197905]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.7, 0.7, 1)
-theme_override_font_sizes/font_size = 12
-text = "💡 Tip: Pay attention to news headlines before investing!"
-autowrap_mode = 2
 
 [node name="SideDrawer" type="Control" parent="." unique_id=900000001]
 visible = false
@@ -540,6 +491,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 300.0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
 
 [node name="Bg" type="ColorRect" parent="SideDrawer/DrawerPanel" unique_id=1584673732]
 layout_mode = 2
@@ -590,4 +542,5 @@ theme_override_constants/separation = 5
 [connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES/BtnLong" to="." method="_on_futures_long_pressed"]
 [connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES/BtnShort" to="." method="_on_futures_short_pressed"]
 [connection signal="pressed" from="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn" to="." method="_on_type_game_pressed"]
+[connection signal="pressed" from="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn" to="." method="_on_social_game_pressed"]
 [connection signal="pressed" from="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox/CloseBtn" to="." method="_on_drawer_close_pressed"]

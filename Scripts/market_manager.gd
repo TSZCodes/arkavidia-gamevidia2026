@@ -7,12 +7,16 @@ var max_active_stocks: int = 100
 var good_news_templates = ["partners with tech giant.", "reports record profits.", "launches revolutionary product.", "approved by regulators.", "receives massive investment."]
 var bad_news_templates = ["faces class-action lawsuit.", "suffers major data breach.", "CEO steps down.", "banned in major country.", "misses earnings report."]
 
+var false_info_chance: float = 0.2
+
 func _ready() -> void:
 	_generate_custom_stocks()
 	update_active_stocks()
+	# Connect to the event bus for the friend's social game logic
+	if not EventBus.news_released.is_connected(_on_news_received):
+		EventBus.news_released.connect(_on_news_received)
 
 func _generate_custom_stocks() -> void:
-	
 	var definitions = [
 		# Sektor teknologi dan media
 		["Sumsang Electronics", "SSNG", "Teknologi & Media", 1200.0, false],
@@ -95,7 +99,6 @@ func generate_insider_news() -> void:
 	var impact = stock.volatility * volatility_multiplier * (1 if is_good else -1)
 	var msg = good_news_templates.pick_random() if is_good else bad_news_templates.pick_random()
 	EventBus.emit_signal("news_released", stock.company_name, impact, msg)
-	stock.queue_news_impact(impact, 3)
 
 func trigger_market_update() -> void:
 	for stock in active_stocks:
@@ -151,7 +154,6 @@ func calculate_futures_pnl(stock_name: String) -> Dictionary:
 		if s.company_name == stock_name:
 			stock = s
 			break
-	
 	if not stock: return {"pnl": 0.0, "pnl_pct": 0.0, "payout": 0.0}
 
 	var price_diff_pct = (stock.current_price - pos.entry_price) / pos.entry_price
@@ -161,7 +163,6 @@ func calculate_futures_pnl(stock_name: String) -> Dictionary:
 	var payout = pos.margin * (1.0 + pnl_pct)
 	if payout < 0: payout = 0.0
 	var profit = payout - pos.margin
-	
 	return {"pnl": profit, "pnl_pct": pnl_pct, "payout": payout}
 
 func close_futures_position(index: int) -> void:
@@ -176,3 +177,28 @@ func close_futures_position(index: int) -> void:
 	
 	var sign = "+" if calc.pnl >= 0 else "-"
 	GameManager.emit_signal("notif_message", "Closed " + stock.symbol + ": " + sign + "$" + str(abs(int(calc.pnl))))
+
+# --- SOCIAL GAME SUPPORT (UPDATED) ---
+func apply_insider_info(stock_index: int, impact: float) -> void:
+	if stock_index >= active_stocks.size(): return
+	var stock = active_stocks[stock_index]
+	
+	var final_impact = impact
+	var is_lie = false
+	
+	# Twist: 20% chance the info is wrong (False Info)
+	if randf() < false_info_chance:
+		final_impact *= -1.0 
+		is_lie = true
+		
+	stock.hidden_trend_modifier += final_impact
+	
+	# === THIS IS THE FIX: EMIT THE VISUAL SIGNAL ===
+	var msg = "Intel from Social Engineering"
+	if is_lie: msg += " (Source seems suspicious...)"
+	EventBus.emit_signal("news_released", stock.company_name, final_impact, msg)
+
+func _on_news_received(stock_name: String, impact: float, message: String) -> void:
+	for stock in active_stocks:
+		if stock.company_name == stock_name:
+			stock.apply_news_impact(impact, 3)
