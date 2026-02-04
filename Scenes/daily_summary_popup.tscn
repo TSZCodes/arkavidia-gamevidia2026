@@ -1,0 +1,115 @@
+[gd_scene format="3" uid="uid://daily_summary"]
+
+[ext_resource type="Script" path="res://Scripts/daily_summary_popup.gd" id="1_daily"]
+
+[node name="DailySummaryPopup" type="PopupPanel"]
+script = ExtResource("1_daily")
+size = Vector2i(500, 400)
+visible = true
+content_scale_mode = 1
+content_scale_aspect = 2
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15, 0.15, 0.18, 0.95)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "🌙 DAILY SUMMARY"
+horizontal_alignment = 1
+
+[node name="DayLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "Day 1 → Day 2"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryVBox" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="WalletLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "💰 Wallet: $1,000.00"
+
+[node name="AssetsLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "📊 Assets: $0.00"
+
+[node name="TotalLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "💎 Total Net Worth: $1,000.00"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ChangesHeader" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_font_sizes/font_size = 16
+text = "📈 ASSET CHANGES"
+horizontal_alignment = 1
+
+[node name="ChangesScroll" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChangesVBox" type="VBoxContainer" parent="VBoxContainer/ChangesScroll"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="ChangesLabel" type="Label" parent="VBoxContainer/ChangesScroll/ChangesVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "BTC: 0.00 → 0.00 ($0.00)"
+autowrap_mode = 2
+
+[node name="DebtLabel" type="Label" parent="VBoxContainer/ChangesScroll/ChangesVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = "💳 Debt: $100,000.00"
+
+[node name="NetChangeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "📉 Net Change: +$0.00"
+
+[node name="CloseBtn" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "✓ CONTINUE TO NEXT DAY"

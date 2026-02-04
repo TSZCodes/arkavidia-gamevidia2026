@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="StockData" format=3 uid="uid://blqk5jx13g1gd"]
-
-[ext_resource type="Script" uid="uid://dlrmnpmkrvm0l" path="res://Scripts/stock_data.gd" id="1_yxw4o"]
-
-[resource]
-script = ExtResource("1_yxw4o")
-company_name = "APPLE"
-symbol = "AAPL"
-current_price = 250.0
