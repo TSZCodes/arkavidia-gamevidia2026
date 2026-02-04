@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="chatOptions" format=3 uid="uid://daws6mdi4n14l"]
+
+[ext_resource type="Script" uid="uid://ddxssi5pxlak8" path="res://Scripts/chat_options.gd" id="1_84rmi"]
+
+[resource]
+script = ExtResource("1_84rmi")
+options1_scenario_1 = Dictionary[int, String]({
+0: "“Saya dapat arahan dari Pak Robinson untuk memastikan trailer serta jadwal tayang GTA 6, pak. Jadi saya mau ngecek laporan finalnya soal projek ini.”",
+1: "“Saya sebenarnya mau nagih hutang bapak sama Pak Robinson sih pak.”",
+2: "“Saya sebenarnya suka sama bapak”"
+})
+options2_scenario_1 = Dictionary[int, String]({
+0: "“Betul pak, nama saya Jack Tyler, sekretaris pengganti sementaranya Pak Robinson.”",
+1: "“Nama saya Budiono Siregar. Cita-cita saya, kapal lawd.”",
+2: "“Saya batman.”"
+})
+options3_scenario_1 = Dictionary[int, String]({
+0: "“Wah jangan pak, beliau lagi ada kunjungan bisnis ke Swiss. Takutnya kalau bapak telepon sekarang, nanti beliau marah-marah lagi.”",
+1: "“Jangan pak, beliau lagi mabok dan party.”",
+2: "“Boleh pak.”"
+})
+options4_scenario_1 = Dictionary[int, String]({
+0: "“Baiklah, terimakasih, saya akan mencobanya. Maaf jika saya mengganggu”",
+1: "“Awokawokwa kena tipu lu.”",
+2: "“Baiklah, terimakasih (posting ke medsos)”"
+})
+responses_scenario_1 = Dictionary[int, String]({
+0: "“Ah iya, saya Adam. Ada apa ya?”",
+1: "“Ohh, oke sih. Tapi ini dengan siapa ya? Soalnya setau saya asisten Pak Robinson itu cewe.”",
+2: "“Owalah ngerti-ngerti, bentar ya, saya harus konfirmasi dulu nih sama Pak Robinson”",
+3: "“Hm, iya juga sih. Beliau bukan tipe yang mau diganggu juga”",
+4: "“Yah oke sih.. passwordnya BangsaBesar_BesarKorupnya123#”",
+10: "“Halo Pak Jason, saya sekretarisnya Pak Robinson. Ini dengan bapak Adam ya?”",
+11: "“Iya pak, kebetulan saya juga hanya perlu pass code buat masuk ke cloud drive nya, Pak. Kalau bisa bapak ngomongin aja sandinya.\""
+})
+options1_scenario_2 = Dictionary[int, String]({
+0: "\"Halo, saya dari Departemen Pembersihan Data Pusat. Kami mendeteksi ada 'Sinyal Luar' yang mencoba menginfeksi file Encrypted_FirstContact.zip di server kamu.\"",
+1: "\"Halo, ini dari tukang paket. Ada kiriman alien, tapi alamat kantor NASI-nya kurang jelas nih.\"",
+2: "\"Saya mau nanya, kalau saya mau melamar jadi astronot tapi takut ketinggian bisa enggak ya?\""
+})
+options2_scenario_2 = Dictionary[int, String]({
+0: "“Virus yang nyerang database NASI teridentifikasi punya teknologi Cloaking yang sangat canggih. Sebaiknya folder itu kami amankan terlebih dahulu, kami rasa virus itu bisa menghilangkannya dalam waktu kurang dari dua menit saja.”",
+1: "“Gituan kok dipercaya, Firewall nya kamu tuh barang lama. Udah rusak itu. Ngapain pusing toh?”",
+2: "“Lah, iyakah? Yaudah kayaknya saya salah ngecek.”"
+})
+options3_scenario_2 = Dictionary[int, String]({
+0: "“Sesuai protokol yang berlaku, ketika dalam kondisi darurat ini saya memerlukan Master Decryption Key untuk ngebuka proteksi file nya dari sini. Sebaiknya kamu cepat!”",
+1: "“Bakar aja komputernya pak, biar virusnya kebakar juga.”",
+2: "“Kalo gua sih resign ya, pak.”"
+})
+options4_scenario_2 = Dictionary[int, String]({
+0: "“Terimakasih atas konfirmasinya. Akan saya cepat tangani.”",
+1: "“Yes akhirnya dapet kodenya, dasar bego lu, mau aja ditipu.”",
+2: "“Oke, makasih, titip salam ke aliennya ya, nanti aku ajak ngebakso.”"
+})
+responses_scenario_2 = Dictionary[int, String]({
+0: "“Halo, saya dengan Unit Database NASI, apa ada yang bisa saya bantu?”",
+1: "“Hah? Masa sih bisa terinfeksi? Saya liat ini firewall statusnya masih ‘aman’ aja kok pak.”",
+2: "“Wah gawat dong? Ini saya harus apa, ya pak? Soalnya saya ga punya wewenang buat mindahin file sembarangan.”",
+3: "“T-Tapi pak..”",
+4: "“Oke, oke! Passwordnya saya bacakan sekali ya, pak. $GVB_LunaZarp_666!”",
+10: "“Sudahlah, cepat! Jika tidak virusnya bakal mengakses file lainnya!”"
+})

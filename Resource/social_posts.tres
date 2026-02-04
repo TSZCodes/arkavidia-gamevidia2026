@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SocialPosts" format=3 uid="uid://bkugaaydm61yf"]
+
+[ext_resource type="Script" uid="uid://dxcv5xfpljwfn" path="res://Scripts/social_posts.gd" id="1_lbrwx"]
+
+[resource]
+script = ExtResource("1_lbrwx")

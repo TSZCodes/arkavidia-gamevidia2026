@@ -106,8 +106,8 @@ func cover_stock_usd(index: int, usd_to_cover: float) -> void:
 		if GameManager.spend_money(cost):
 			add_to_portfolio(stock.company_name, actual_coins)
 
-func add_to_portfolio(name: String, amount: float) -> void:
-	GameManager.portfolio[name] = GameManager.portfolio.get(name, 0.0) + amount
+func add_to_portfolio(company_name: String, amount: float) -> void:
+	GameManager.portfolio[company_name] = GameManager.portfolio.get(company_name, 0.0) + amount
 
 # --- UPGRADES & INTEL ---
 

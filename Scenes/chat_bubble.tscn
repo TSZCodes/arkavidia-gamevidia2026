@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://stv6av4qbqpi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imy2w"]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="chatBubble" type="MarginContainer" unique_id=374503007]
+anchors_preset = -1
+anchor_right = 0.20833333
+anchor_bottom = 0.06635802
+offset_right = -200.0
+offset_bottom = -3.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=202524361]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_imy2w")
+
+[node name="Label" type="Label" parent="PanelContainer" unique_id=326549610]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+autowrap_mode = 3

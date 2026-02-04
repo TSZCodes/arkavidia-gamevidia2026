@@ -14,8 +14,7 @@ var template_word : String
 
 func _ready() -> void:
 	on_done = true
-	template_word = change_word()
-	label_template.text = template_word
+	template_word = label_template.text
 	on_done = false
 
 func _process(_delta: float) -> void:
@@ -34,10 +33,9 @@ func _process(_delta: float) -> void:
 		on_done = true
 		await get_tree().create_timer(0.5).timeout
 		label_player.text = ""
-		template_word = change_word()
-		label_template.text = template_word
-		player_inputs.clear()
 		change_word()
+		template_word = label_template.text
+		player_inputs.clear()
 		on_done = false
 
 func _input(event: InputEvent) -> void:
@@ -46,23 +44,24 @@ func _input(event: InputEvent) -> void:
 		
 		# Handle letter input
 		if event.unicode > 0:
-			var char = char(event.unicode)
-			if is_valid_letter(char):
-				player_inputs.append(char)
+			var chara = char(event.unicode)
+			if is_valid_letter(chara):
+				player_inputs.append(chara)
 		
 		# Handle backspace
 		elif keycode == KEY_BACKSPACE:
 			if player_inputs.size() > 0:
-				player_inputs.remove_at(player_inputs.size() - 1)
+				player_inputs.remove_at(-1)
 		
 		# Handle escape to exit
 		elif keycode == KEY_ESCAPE:
 			queue_free()
 
-func is_valid_letter(char: String) -> bool:
-	return char.length() == 1 and char.to_lower() != char.to_upper()
+func is_valid_letter(chara: String) -> bool:
+	return chara.length() == 1 and chara.to_lower() != chara.to_upper()
 
 func change_word() -> void:
 	if not on_done:
-		current_word = words[randi() % words.size()]
-		label_template.text = current_word
+		return
+	current_word = words[randi() % words.size()]
+	label_template.text = current_word

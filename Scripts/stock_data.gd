@@ -29,6 +29,7 @@ func update_price() -> void:
 
 	hidden_trend_modifier = move_toward(hidden_trend_modifier, 0.0, 0.05)
 
-func apply_news_impact(strength: float, duration_days: int) -> void:
+func apply_news_impact(strength: float, _duration_days: int) -> void:
 	hidden_trend_modifier = strength
 	print("News impact applied to ", company_name, ": ", strength)
+	

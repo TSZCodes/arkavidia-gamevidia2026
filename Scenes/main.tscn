@@ -10,8 +10,8 @@
 [ext_resource type="Resource" uid="uid://blqk5jx13g1gd" path="res://Resource/stock_apple.tres" id="6_fdnlq"]
 [ext_resource type="Resource" uid="uid://dbutnv0gc383w" path="res://Resource/stock_nvidia.tres" id="7_jkdf5"]
 [ext_resource type="Resource" uid="uid://ddo4emnvthig3" path="res://Resource/stock_tesla.tres" id="8_wsu2k"]
-[ext_resource type="Script" uid="uid://bws8k7fh2l6yo" path="res://Scripts/news_manager.gd" id="9_news"]
-[ext_resource type="Script" uid="uid://c8v8q8q8q8q8" path="res://Scripts/event_bus.gd" id="10_event"]
+[ext_resource type="Script" uid="uid://ckdkk6bq827r3" path="res://Scripts/news_manager.gd" id="9_news"]
+[ext_resource type="Script" uid="uid://clyrr01ejohpe" path="res://Scripts/event_bus.gd" id="10_event"]
 
 [node name="Main" type="Node2D" unique_id=1860880438]
 

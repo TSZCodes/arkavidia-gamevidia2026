@@ -1,36 +1,37 @@
-[gd_scene format=3 uid="uid://news_scene"]
+[gd_scene format=3 uid="uid://dvjieyf8xxu5a"]
 
-[ext_resource type="Script" path="res://Scripts/news_display.gd" id="1_news"]
+[ext_resource type="Script" uid="uid://cg07tyal7ovje" path="res://Scripts/news_display.gd" id="1_news"]
 
-[node name="NewsWindow" type="PopupPanel"]
+[node name="NewsWindow" type="PopupPanel" unique_id=855695255]
+oversampling_override = 1.0
 title = "Market News"
 size = Vector2i(600, 400)
-visible = false
+visible = true
 script = ExtResource("1_news")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 592.0
-offset_bottom = 392.0
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=916235515]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 596.0
+offset_bottom = 396.0
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=412016472]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 24
 text = "📰 MARKET NEWS"
 horizontal_alignment = 1
 
-[node name="NewsScroll" type="ScrollContainer" parent="VBoxContainer"]
+[node name="NewsScroll" type="ScrollContainer" parent="VBoxContainer" unique_id=258154398]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="NewsVBox" type="VBoxContainer" parent="VBoxContainer/NewsScroll"]
+[node name="NewsVBox" type="VBoxContainer" parent="VBoxContainer/NewsScroll" unique_id=1534301352]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="CloseButton" type="Button" parent="VBoxContainer"]
+[node name="CloseButton" type="Button" parent="VBoxContainer" unique_id=876086325]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "CLOSE"
-custom_minimum_size = Vector2(0, 40)
