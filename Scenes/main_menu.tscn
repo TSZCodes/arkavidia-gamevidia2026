@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://b5f3n3dgctu3f"]
+
+[ext_resource type="Script" uid="uid://dq5oq8jbhldjk" path="res://Scripts/main_menu.gd" id="1_28flt"]
+
+[node name="main_menu" type="Control" unique_id=157481123]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_28flt")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1900843582]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="." unique_id=2068480000]
+layout_mode = 0
+anchor_left = 0.46006945
+anchor_right = 0.5390625
+anchor_bottom = 0.03549383
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "GAME TITLE"
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayButton" type="Button" parent="." unique_id=926648091]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48220485
+anchor_top = 0.47608024
+anchor_right = 0.51779515
+anchor_bottom = 0.52391976
+offset_left = 16.5
+offset_top = 11.5
+offset_right = -16.5
+offset_bottom = -11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+metadata/_edit_use_anchors_ = true
+
+[node name="SettingsButton" type="Button" parent="." unique_id=202400864]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45529515
+anchor_top = 0.51929015
+anchor_right = 0.54470485
+anchor_bottom = 0.60262346
+offset_left = 16.5
+offset_top = 11.5
+offset_right = -16.5
+offset_bottom = -11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Settings"
+metadata/_edit_use_anchors_ = true
+
+[node name="QuitButton" type="Button" parent="." unique_id=1704099747]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4674479
+anchor_top = 0.5748457
+anchor_right = 0.53255206
+anchor_bottom = 0.658179
+offset_left = 16.5
+offset_top = 11.5
+offset_right = -16.5
+offset_bottom = -11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
