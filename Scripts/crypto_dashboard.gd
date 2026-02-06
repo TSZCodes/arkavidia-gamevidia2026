@@ -119,15 +119,15 @@ func _ready() -> void:
 	# Initialize nav buttons visibility
 	_update_nav_buttons()
 	
-	# FIX: Check for missed Day 1 notifications
+	# FIX: Check for missed notifications from GameManager startup
 	call_deferred("_check_startup_notifications")
 
 func _check_startup_notifications() -> void:
-	# If GameManager already triggered a minigame before this scene loaded
+	# Check if a minigame is already active in GameManager
 	if GameManager.active_minigame != "":
 		_on_minigame_opportunity(GameManager.active_minigame)
+	# Otherwise, if it's day 1, show a welcome message
 	elif GameManager.current_day == 1:
-		# If it's day 1 and no random minigame triggered, show welcome
 		_get_notif_popup().show_notification("Welcome to Day 1! Market is open.")
 
 # =============================================================================
@@ -204,8 +204,6 @@ func _update_nav_buttons() -> void:
 	if nav_left_btn:
 		nav_left_btn.visible = (current_screen_index == 1)
 	if nav_right_btn:
-		# Since it's now inside Screen1, we don't strictly need to hide it when off-screen,
-		# but it's good practice.
 		nav_right_btn.visible = (current_screen_index == 0)
 
 func _on_nav_left_pressed() -> void:
