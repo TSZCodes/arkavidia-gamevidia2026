@@ -1,12 +1,42 @@
 extends Control
 
-# Type Minigame - Typing Accuracy Minigame
+# Type Minigame - Typing Accuracy Minigame (MonkeyType Style)
 # Player must type technical terms correctly to gain insider information
 
-signal minigame_won
+signal minigame_won(target_stock: String, is_positive: bool)
 
+# Programming terms for typing practice (MonkeyType style)
 const words: Array[String] = [
 	"Algorithm", "Variable", "Function", "Recursion", "Loop", "Boolean", "Integer", "Float", "String", "Array", "Pointer", "Reference", "Syntax", "Semantics", "Scope", "Class", "Object", "Inheritance", "Polymorphism", "Encapsulation", "Abstraction", "Interface", "Constructor", "Destructor", "Instance", "Method", "Attribute", "Stack", "Queue", "LinkedList", "BinaryTree", "Hashmap", "Graph", "Vector", "Tuple", "Dictionary", "Set", "Heap", "Matrix", "Compiler", "Interpreter", "Debugger", "Terminal", "Shell", "Git", "Repository", "Commit", "Branch", "Merge", "PullRequest", "Docker", "Container", "Linux", "Vim", "API", "JSON", "XML", "HTTP", "Server", "Client", "Database", "Frontend", "Backend", "Framework", "Library", "Endpoint", "Token", "Authentication", "Deploy", "Bug", "Refactor", "Deprecated", "Compile", "Runtime", "Latency", "Bandwidth", "Throughput", "Deadlock", "RaceCondition", "Overflow", "Segfault", "Callback", "Closure", "Promise"
+]
+
+# Insider news snippets - displayed as reward after completing typing
+const insider_news: Array[Dictionary] = [
+	# POSITIVE NEWS
+	{"text": "ABIOPARMA SERUM MANUSIA ABADI", "stock": "ABIO", "is_positive": true},
+	{"text": "NASI JAMUAN ASING ELANG JAWA", "stock": "NASI", "is_positive": true},
+	{"text": "TESLA TOWER LISTRIK UTAMA", "stock": "PSK", "is_positive": true},
+	{"text": "BIG BATTERY ARC REACTOR", "stock": "BBC", "is_positive": true},
+	{"text": "DRAF UNDANG PERAMPASAN ASET BCA", "stock": "BCA", "is_positive": true},
+	{"text": "AMATEUR BIOTECH POHON UANG", "stock": "ABC", "is_positive": true},
+	{"text": "BATU BARU KOMEN HADIAH", "stock": "BBHP", "is_positive": true},
+	{"text": "INDIGO KUADRALIUM INTERNET", "stock": "IND", "is_positive": true},
+	{"text": "BETAvERSE PASANGAN LAJANG", "stock": "META", "is_positive": true},
+	{"text": "KAPAL NEPTUNUS PRASEJARAHA", "stock": "KLN", "is_positive": true},
+	{"text": "SANG SURYA PERTIWI ENERGI", "stock": "SSP", "is_positive": true},
+	{"text": "PT PANASEA BIOTEK", "stock": "PANA", "is_positive": true},
+	# NEGATIVE NEWS
+	{"text": "BATU BARU ANAK PENAMBANG", "stock": "BBHP", "is_positive": false},
+	{"text": "SUMSANG XIAOMAY XIAOMI", "stock": "SSNG", "is_positive": false},
+	{"text": "WWG DANA JALAN RAPAT", "stock": "WWG", "is_positive": false},
+	{"text": "JENDERAL KOMISARI PERTAMINI", "stock": "PRTM", "is_positive": false},
+	{"text": "BCA KORUPSI AYAM JAGO", "stock": "BCA", "is_positive": false},
+	{"text": "INDOAPRIl BOLOSMART DONASI", "stock": "IDAP", "is_positive": false},
+	{"text": "SAWIT MAKMUR MINYAK SWASTA", "stock": "SMH", "is_positive": false},
+	{"text": "ELANG JAWA LITTLE ST JAMES", "stock": "ELJA", "is_positive": false},
+	{"text": "PINJOL KAYA SLOTS KAKEK", "stock": "PBKI", "is_positive": false},
+	{"text": "UNIPELER PAYUNG NAPAS PREMIUM", "stock": "ULVR", "is_positive": false},
+	{"text": "PAYUNG CORP NAPAS PREMIUM", "stock": "UMB", "is_positive": false}
 ]
 
 @export var word_display: RichTextLabel
@@ -15,6 +45,8 @@ var player_inputs: Array[String] = []
 var current_word: String = ""
 var words_completed: int = 0
 var target_words: int = 5
+var current_target_stock: String = ""
+var current_is_positive: bool = true
 
 func _ready() -> void:
 	change_word()
@@ -27,7 +59,8 @@ func _input(event: InputEvent) -> void:
 			if is_valid_letter(char_str):
 				if player_inputs.size() < current_word.length():
 					var next_char_index = player_inputs.size()
-					if char_str == current_word[next_char_index]:
+					var target_char = current_word[next_char_index]
+					if char_str == String(target_char):
 						player_inputs.append(char_str)
 						update_display()
 						check_word_finished()
@@ -75,7 +108,12 @@ func change_word() -> void:
 	update_display()
 
 func _win_game() -> void:
-	emit_signal("minigame_won")
+	# Select ONE random insider news as the reward
+	var news = insider_news[randi() % insider_news.size()]
+	current_target_stock = news["stock"]
+	current_is_positive = news["is_positive"]
+	
+	emit_signal("minigame_won", current_target_stock, current_is_positive)
 	queue_free()
 
 func _on_skip_pressed() -> void:

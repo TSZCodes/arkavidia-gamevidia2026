@@ -499,11 +499,23 @@ func _on_type_game_pressed() -> void:
 	
 	get_tree().root.add_child(active_minigame_layer)
 
-func _on_minigame_won() -> void:
+func _on_minigame_won(target_stock: String, is_positive: bool) -> void:
 	AudioManager.play_hacker_win()
-	_on_notification_received("Accessing Insider Network...")
-	await get_tree().create_timer(0.5).timeout
-	market_manager.generate_insider_news()
+	
+	var impact_type = "POSITIVE" if is_positive else "NEGATIVE"
+	var impact_val = 0.10 if is_positive else -0.10
+	_on_notification_received("INSIDER INTEL DECRYPTED: " + target_stock + " (" + impact_type + ")")
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	# Apply insider effect to the specific stock
+	var idx = market_manager.get_stock_index_by_symbol(target_stock)
+	if idx != -1:
+		market_manager.apply_insider_info(idx, impact_val)
+		EventBus.emit_signal("news_released", "Hacker Challenge", impact_val, "Decrypted insider intel on " + target_stock)
+	else:
+		# Fallback to random stock if not found
+		market_manager.generate_insider_news()
 
 func _on_social_game_pressed() -> void:
 	if GameManager.active_minigame != "social" and GameManager.active_minigame != "":
@@ -622,7 +634,11 @@ func _on_notification_received(message: String) -> void:
 	_add_log_label("! " + message, Color(1, 0.8, 0.4))
 
 func _on_minigame_opportunity(type: String) -> void:
-	var game_name = "Hacker Challenge" if type == "type" else "Social Engineering"
+	var game_name = "Hacker Challenge"
+	if type == "social":
+		game_name = "Social Engineering"
+	elif type == "social_feed":
+		game_name = "Social Media Feed"
 	_get_notif_popup().show_notification("DAILY OPPORTUNITY: " + game_name + " is available! Click the minigame button to play.")
 
 func _add_log_label(text: String, color: Color) -> void:
@@ -999,3 +1015,31 @@ func _on_day_changed(_d) -> void:
 	var state = _capture_financial_state()
 	start_of_day_equity = state["equity"]
 	_update_ui()
+
+
+func _on_social_game_btn_2_pressed() -> void:
+	# Social Media Feed can only be played when it's the daily opportunity
+	if GameManager.active_minigame != "social_feed" and GameManager.active_minigame != "":
+		var game_name = "Social Media Feed" if GameManager.active_minigame == "type" else "Social Engineering"
+		_get_notif_popup().show_notification("Today's opportunity is: " + game_name + ". Play that one instead!")
+		return
+	
+	if active_minigame_layer != null and is_instance_valid(active_minigame_layer):
+		_on_notification_received("Minigame already active!")
+		return
+
+	var game = preload("res://Scenes/social_menu.tscn").instantiate()
+	active_minigame_layer = CanvasLayer.new()
+	active_minigame_layer.layer = 10
+	active_minigame_layer.add_child(game)
+
+	if game.has_signal("game_finished"):
+		game.game_finished.connect(_on_social_game_finished)
+
+	game.tree_exited.connect(func():
+		if is_instance_valid(active_minigame_layer):
+			active_minigame_layer.queue_free()
+		active_minigame_layer = null
+	)
+
+	get_tree().root.add_child(active_minigame_layer)

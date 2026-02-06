@@ -687,6 +687,9 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 theme_override_constants/separation = 10
 
+[node name="HSeparator" type="HSeparator" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
+layout_mode = 2
+
 [node name="InsiderHeader" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197898]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
@@ -720,8 +723,18 @@ text = "SOCIAL ENGINEERING"
 [node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn" unique_id=342166170]
 script = ExtResource("3_audio")
 
-[node name="HSeparator" type="HSeparator" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
+[node name="SocialGameBtn2" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=277564998]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
+text = "SOCIAL MEDIA FEED"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn2" unique_id=622945493]
+script = ExtResource("3_audio")
 
 [node name="SideDrawer" type="Control" parent="." unique_id=900000001]
 visible = false
@@ -811,4 +824,5 @@ theme_override_constants/separation = 8
 [connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox/HeaderRow/NavLeftBtn" to="." method="_on_nav_left_pressed"]
 [connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn" to="." method="_on_type_game_pressed"]
 [connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn" to="." method="_on_social_game_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn2" to="." method="_on_social_game_btn_2_pressed"]
 [connection signal="pressed" from="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox/CloseBtn" to="." method="_on_drawer_close_pressed"]

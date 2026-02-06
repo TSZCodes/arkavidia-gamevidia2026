@@ -222,6 +222,13 @@ func get_stock_index_by_symbol(symbol: String) -> int:
 			return i
 	return -1
 
+# Get list of active stock symbols (for social media feed filtering)
+func get_active_stock_symbols() -> Array:
+	var symbols = []
+	for stock in active_stocks:
+		symbols.append(stock.symbol)
+	return symbols
+
 func apply_insider_info(stock_index: int, impact: float) -> void:
 	if stock_index < 0 or stock_index >= active_stocks.size():
 		return

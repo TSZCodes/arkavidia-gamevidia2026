@@ -78,5 +78,9 @@ func log_history(equity: float) -> void:
 	})
 
 func _trigger_daily_minigame() -> void:
-	active_minigame = "type" if randf() < 0.5 else "social"
+	# Rotating pattern: type -> social -> social_feed -> repeat
+	# This guarantees all 3 types appear equally over time with no streaks
+	var game_types = ["type", "social", "social_feed"]
+	var day_index = (current_day - 1) % game_types.size()
+	active_minigame = game_types[day_index]
 	minigame_opportunity.emit(active_minigame)

@@ -35,7 +35,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="typeMinigame" type="Control" node_paths=PackedStringArray("word_display")]
+[node name="typeMinigame" type="Control" node_paths=PackedStringArray("word_display", "news_indicator", "stock_indicator")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +44,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6r85y")
 word_display = NodePath("CenterContainer/Panel/Margin/VBox/WordContainer/LabelWrapper/RichTextLabel")
+news_indicator = NodePath("CenterContainer/Panel/Margin/VBox/NewsIndicator")
+stock_indicator = NodePath("CenterContainer/Panel/Margin/VBox/StockIndicator")
 
 [node name="BackgroundOverlay" type="ColorRect" parent="."]
 layout_mode = 1
@@ -63,7 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(400, 250)
+custom_minimum_size = Vector2(500, 350)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
 
@@ -76,20 +78,41 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.8, 0.4, 1)
 theme_override_font_sizes/font_size = 18
-text = "> SYSTEM OVERRIDE_PROCOL"
+text = "> HACK INSIDER NEWS FEED"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "DECRYPT STOCK INTEL - TYPE TO HACK"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 
+[node name="NewsIndicator" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = "POSITIVE INTEL"
+horizontal_alignment = 1
+
+[node name="StockIndicator" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "STOCK: ABC"
+horizontal_alignment = 1
+
 [node name="WordContainer" type="PanelContainer" parent="CenterContainer/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_word_area")
 
@@ -98,9 +121,9 @@ layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/Panel/Margin/VBox/WordContainer/LabelWrapper"]
 clip_contents = false
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
 text = "[center][color=#44ff44]ALGO[/color][color=#ffffff]RITHM[/color][/center]"
 fit_content = true
@@ -110,8 +133,8 @@ autowrap_mode = 0
 [node name="Instructions" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-theme_override_font_sizes/font_size = 12
-text = "[ TYPE THE CODE ABOVE ]"
+theme_override_font_sizes/font_size = 11
+text = "[ TYPE TO DECRYPT HEADLINE - 3 HEADLINES TO COMPLETE ]"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="CenterContainer/Panel/Margin/VBox"]
