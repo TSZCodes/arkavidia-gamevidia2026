@@ -56,6 +56,8 @@ var current_search_query: String = ""
 @onready var screen_1: Control = screens_container.get_node("Screen1")
 @onready var screen_2: Control = screens_container.get_node("Screen2")
 @onready var stock_search_bar: LineEdit = %StockSearchBar
+@onready var nav_left_btn: Button = %NavLeftBtn
+@onready var nav_right_btn: Button = %NavRightBtn
 
 func _ready() -> void:
 	set_process_input(true)
@@ -113,6 +115,20 @@ func _ready() -> void:
 	
 	if market_manager and not market_manager.active_stocks.is_empty():
 		_on_stock_selected(0)
+		
+	# Initialize nav buttons visibility
+	_update_nav_buttons()
+	
+	# FIX: Check for missed Day 1 notifications
+	call_deferred("_check_startup_notifications")
+
+func _check_startup_notifications() -> void:
+	# If GameManager already triggered a minigame before this scene loaded
+	if GameManager.active_minigame != "":
+		_on_minigame_opportunity(GameManager.active_minigame)
+	elif GameManager.current_day == 1:
+		# If it's day 1 and no random minigame triggered, show welcome
+		_get_notif_popup().show_notification("Welcome to Day 1! Market is open.")
 
 # =============================================================================
 # NAVIGATION SYSTEM - Dual Screen Layout
@@ -171,6 +187,8 @@ func switch_screen(index: int) -> void:
 	current_screen_index = index
 	var w = screen_viewport.size.x
 	
+	_update_nav_buttons()
+	
 	var tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
 	if index == 0:
@@ -181,6 +199,20 @@ func switch_screen(index: int) -> void:
 		tween.tween_property(screen_2, "position:x", 0.0, 0.4)
 	
 	tween.chain().tween_callback(func(): is_transitioning = false)
+
+func _update_nav_buttons() -> void:
+	if nav_left_btn:
+		nav_left_btn.visible = (current_screen_index == 1)
+	if nav_right_btn:
+		# Since it's now inside Screen1, we don't strictly need to hide it when off-screen,
+		# but it's good practice.
+		nav_right_btn.visible = (current_screen_index == 0)
+
+func _on_nav_left_pressed() -> void:
+	switch_screen(0)
+
+func _on_nav_right_pressed() -> void:
+	switch_screen(1)
 
 # =============================================================================
 # UI UTILITY FUNCTIONS
@@ -198,7 +230,9 @@ func _setup_top_buttons() -> void:
 		find_child("PinjolBtn", true, false),
 		find_child("HistoryBtn", true, false),
 		find_child("PayDebtBtn", true, false),
-		find_child("HamburgerBtn", true, false)
+		find_child("HamburgerBtn", true, false),
+		nav_left_btn,
+		nav_right_btn
 	]
 	for b in btns:
 		_remove_focus(b)

@@ -1,99 +1,89 @@
 extends Node
 
-# Game Manager - Core Game State & Economy
-# Manages player money, debt, portfolio, and game progression
-
 signal money_changed(new_amount)
+signal debt_changed(new_amount)
 signal day_changed(new_day)
-signal debt_changed(new_debt)
-signal notif_message(text)
-signal minigame_opportunity(type: String) # Added for daily minigame notifications
+signal notif_message(msg)
+signal minigame_opportunity(type)
 
 var player_money: float = 1000.0
-var current_day: int = 1
-
 var debt_amount: float = 100000.0
-var daily_interest_rate: float = 0.05
-var interest_cycle_days: int = 10
+var current_day: int = 1
+var history_equity: Array = []
 
-var pinjol_loan_amount: float = 10000.0
-var pinjol_interest_multiplier: float = 1.2
+# Loan restriction
+var loan_taken_today: bool = false
 
+# Portfolio: { "StockName": quantity }
 var portfolio: Dictionary = {}
+
+# Futures: { "StockName": { "entry_price": float, "leverage": float, "is_long": bool, "margin": float } }
 var futures_positions: Dictionary = {}
 
-var history_log: Array = []
-
-# Tracks which minigame is valid today
-var active_minigame: String = "" 
+# Minigame state
+var active_minigame: String = "" # "", "type", "social"
 
 func _ready() -> void:
-	emit_signal("money_changed", player_money)
-	emit_signal("day_changed", current_day)
-	emit_signal("debt_changed", debt_amount)
-	log_history(1000.0)
-	
-	# Initial delay for first notification
-	await get_tree().create_timer(1.5).timeout
-	_determine_daily_event()
+	randomize()
+	_trigger_daily_minigame()
 
 func add_money(amount: float) -> void:
 	player_money += amount
-	emit_signal("money_changed", player_money)
+	money_changed.emit(player_money)
 
-func spend_money(amount: float) -> bool:
+func subtract_money(amount: float) -> bool:
 	if player_money >= amount:
 		player_money -= amount
-		emit_signal("money_changed", player_money)
+		money_changed.emit(player_money)
 		return true
 	return false
 
 func take_emergency_loan() -> void:
-	add_money(pinjol_loan_amount)
-	debt_amount += (pinjol_loan_amount * pinjol_interest_multiplier)
-	emit_signal("debt_changed", debt_amount)
-	emit_signal("notif_message", "Emergency Loan Taken: +$10k")
+	if loan_taken_today:
+		notif_message.emit("❌ LOAN REJECTED: You can only take 1 loan per day!")
+		return
+		
+	var loan_val = 5000.0
+	player_money += loan_val
+	debt_amount += loan_val * 1.1 # 10% instant interest
+	loan_taken_today = true
+	
+	money_changed.emit(player_money)
+	debt_changed.emit(debt_amount)
+	notif_message.emit("⚠️ Emergency Loan taken! +$5,000 (Debt +10%)")
 
 func pay_debt(amount: float) -> void:
-	if debt_amount <= 0:
-		emit_signal("notif_message", "You are debt free!")
-		return
-	var payment = min(amount, debt_amount)
-	if spend_money(payment):
-		debt_amount -= payment
-		emit_signal("debt_changed", debt_amount)
-		emit_signal("notif_message", "Paid Debt: -$" + str(snapped(payment, 0.01)))
-	else:
-		emit_signal("notif_message", "Not enough cash to pay debt!")
+	if amount <= 0: return
+	if player_money >= amount:
+		player_money -= amount
+		debt_amount = max(0, debt_amount - amount)
+		money_changed.emit(player_money)
+		debt_changed.emit(debt_amount)
+		notif_message.emit("💸 Repaid $%s of debt." % str(amount))
 
 func next_day() -> void:
 	current_day += 1
-	active_minigame = "" # Reset daily event
-	emit_signal("day_changed", current_day)
+	# Daily interest
+	debt_amount *= 1.01 
 	
-	if current_day % interest_cycle_days == 0:
-		var interest = debt_amount * daily_interest_rate
-		debt_amount += interest
-		emit_signal("debt_changed", debt_amount)
-		emit_signal("notif_message", "10-Day Cycle: 5% Interest Added to Debt")
+	# Reset daily limits
+	loan_taken_today = false
 	
-	# Delay 2 seconds after sleeping before showing the new opportunity
-	await get_tree().create_timer(2.0).timeout
-	_determine_daily_event()
+	day_changed.emit(current_day)
+	debt_changed.emit(debt_amount)
+	
+	_trigger_daily_minigame()
 
-func _determine_daily_event() -> void:
-	var roll = randf()
-	if roll > 0.5:
-		active_minigame = "type"
-		minigame_opportunity.emit("type")
-	else:
-		active_minigame = "social"
-		minigame_opportunity.emit("social")
-
-func log_history(net_worth: float) -> void:
-	var entry = {
+func log_history(equity: float) -> void:
+	history_equity.append({
 		"day": current_day,
-		"net_worth": net_worth,
-		"debt": debt_amount
-	}
-	history_log.append(entry)
+		"equity": equity
+	})
+
+func _trigger_daily_minigame() -> void:
+	# 40% chance of a minigame appearing each day
+	if randf() < 0.4:
+		active_minigame = "type" if randf() < 0.5 else "social"
+		minigame_opportunity.emit(active_minigame)
+	else:
+		active_minigame = ""
