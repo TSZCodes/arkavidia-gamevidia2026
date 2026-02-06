@@ -6,6 +6,7 @@ extends Control
 var master_slider: Slider
 var music_slider: Slider
 var sfx_slider: Slider
+var is_overlay_mode: bool = false
 
 func _ready() -> void:
 	master_slider = find_child("MasterSlider", true, false)
@@ -26,6 +27,16 @@ func _ready() -> void:
 	master_slider.value = db_to_linear(AudioServer.get_bus_volume_db(0))
 	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(1))
 	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
+	
+	# Check if we're in overlay mode (fullscreen settings panel blocking game)
+	var bg = find_child("Bg", true, false)
+	if bg:
+		if is_overlay_mode:
+			bg.visible = true
+			# Make background not block input
+			bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		else:
+			bg.visible = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

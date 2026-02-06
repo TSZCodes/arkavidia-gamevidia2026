@@ -10,6 +10,7 @@ extends Control
 # - Minigames (Type Minigame, Social Engineering)
 # - News & Notifications System
 # - Day/Night Cycle with Financial Summary
+# - Searchable Stock List
 # =============================================================================
 
 @export var market_manager: Node
@@ -29,6 +30,14 @@ extends Control
 var daily_summary_scene = preload("res://Scenes/daily_summary_popup.tscn")
 var history_popup_scene = preload("res://Scenes/history_window.tscn")
 var pay_debt_popup_scene = preload("res://Scenes/pay_debt_popup.tscn")
+var notif_popup_scene = preload("res://Scenes/notification_popup.tscn")
+var _notif_popup_instance: Control = null
+
+func _get_notif_popup() -> Control:
+	if _notif_popup_instance == null or not is_instance_valid(_notif_popup_instance):
+		_notif_popup_instance = notif_popup_scene.instantiate()
+		add_child(_notif_popup_instance)
+	return _notif_popup_instance
 
 var selected_stock_index: int = -1
 var current_trade_mode: String = "SPOT"
@@ -40,11 +49,13 @@ var active_minigame_layer: CanvasLayer = null
 var start_of_day_equity: float = 0.0
 var current_screen_index: int = 0
 var is_transitioning: bool = false
+var current_search_query: String = ""
 
 @onready var screen_viewport: Control = find_child("ScreenViewport", true, false)
 @onready var screens_container: Control = screen_viewport.get_node("ScreensContainer")
 @onready var screen_1: Control = screens_container.get_node("Screen1")
 @onready var screen_2: Control = screens_container.get_node("Screen2")
+@onready var stock_search_bar: LineEdit = %StockSearchBar
 
 func _ready() -> void:
 	set_process_input(true)
@@ -65,10 +76,19 @@ func _ready() -> void:
 		EventBus.connect("news_released", _on_news_received)
 	if not GameManager.notif_message.is_connected(_on_notification_received):
 		GameManager.connect("notif_message", _on_notification_received)
+	if not GameManager.minigame_opportunity.is_connected(_on_minigame_opportunity):
+		GameManager.connect("minigame_opportunity", _on_minigame_opportunity)
 	
 	if amount_slider:
 		if not amount_slider.value_changed.is_connected(_on_slider_value_changed):
 			amount_slider.value_changed.connect(_on_slider_value_changed)
+	
+	if input_usd:
+		if not input_usd.text_changed.is_connected(_on_input_usd_text_changed):
+			input_usd.text_changed.connect(_on_input_usd_text_changed)
+			
+	if stock_search_bar:
+		stock_search_bar.text_changed.connect(_on_search_text_changed)
 	
 	var overlay_bg = find_child("OverlayBg", true, false)
 	if overlay_bg:
@@ -96,8 +116,6 @@ func _ready() -> void:
 
 # =============================================================================
 # NAVIGATION SYSTEM - Dual Screen Layout
-# Screen 0: Main Trading Interface
-# Screen 1: Social Engineering / Minigames
 # =============================================================================
 
 func _setup_navigation_logic() -> void:
@@ -130,6 +148,9 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if input_usd and input_usd.has_focus():
+		return
+		
+	if stock_search_bar and stock_search_bar.has_focus():
 		return
 
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -186,118 +207,24 @@ func _setup_top_buttons() -> void:
 # SIDE DRAWER - Stock Quick Navigation
 # =============================================================================
 
+func _on_search_text_changed(new_text: String) -> void:
+	current_search_query = new_text.strip_edges().to_lower()
+	rebuild_lists()
+
 func _on_hamburger_btn_pressed() -> void:
 	var side_drawer = find_child("SideDrawer", true, false)
-	var drawer_list = find_child("DrawerList", true, false)
 	var drawer_panel = find_child("DrawerPanel", true, false)
-	if not side_drawer or not drawer_list:
+	if not side_drawer:
 		return
-	
-	for child in drawer_list.get_children():
-		child.queue_free()
-	
-	if market_manager:
-		for i in range(market_manager.active_stocks.size()):
-			var stock = market_manager.active_stocks[i]
-			
-			var btn = Button.new()
-			btn.custom_minimum_size.y = 70
-			btn.toggle_mode = true
-			btn.button_pressed = (i == selected_stock_index)
-			
-			var base_col = Color(0.16, 0.16, 0.20)
-			if i == selected_stock_index:
-				base_col = Color(0.2, 0.22, 0.28)
-			
-			var style_norm = _get_card_style(base_col)
-			var style_hover = _get_card_style(base_col.lightened(0.05))
-			var style_pressed = _get_card_style(base_col.darkened(0.1))
-			
-			btn.add_theme_stylebox_override("normal", style_norm)
-			btn.add_theme_stylebox_override("hover", style_hover)
-			btn.add_theme_stylebox_override("pressed", style_pressed)
-			_remove_focus(btn)
-			
-			btn.pressed.connect(_on_drawer_item_selected.bind(i))
-			
-			var margin = MarginContainer.new()
-			margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-			margin.add_theme_constant_override("margin_left", 0)
-			margin.add_theme_constant_override("margin_top", 0)
-			margin.add_theme_constant_override("margin_right", 15)
-			margin.add_theme_constant_override("margin_bottom", 0)
-			margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			
-			var h_box = HBoxContainer.new()
-			h_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			h_box.add_theme_constant_override("separation", 12)
-			
-			var strip = ColorRect.new()
-			strip.custom_minimum_size.x = 4
-			strip.color = _get_category_color(stock.category)
-			strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			
-			var info_vbox = VBoxContainer.new()
-			info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			info_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-			info_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			
-			var symbol_lbl = Label.new()
-			symbol_lbl.text = stock.symbol
-			symbol_lbl.add_theme_font_size_override("font_size", 16)
-			symbol_lbl.add_theme_color_override("font_color", Color.WHITE)
-			
-			var name_lbl = Label.new()
-			name_lbl.text = stock.company_name
-			name_lbl.add_theme_font_size_override("font_size", 12)
-			name_lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.65))
-			name_lbl.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-			
-			info_vbox.add_child(symbol_lbl)
-			info_vbox.add_child(name_lbl)
-			
-			var price_vbox = VBoxContainer.new()
-			price_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-			price_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			
-			var price_lbl = Label.new()
-			price_lbl.text = "$" + str(snapped(stock.current_price, 0.01))
-			price_lbl.add_theme_font_size_override("font_size", 15)
-			price_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-			price_lbl.add_theme_color_override("font_color", Color(0.5, 0.8, 0.9))
-			
-			price_vbox.add_child(price_lbl)
-			
-			var owned_qty = GameManager.portfolio.get(stock.company_name, 0.0)
-			if owned_qty > 0.0001:
-				var own_lbl = Label.new()
-				own_lbl.text = "Own: " + str(snapped(owned_qty, 0.1))
-				own_lbl.add_theme_font_size_override("font_size", 11)
-				own_lbl.add_theme_color_override("font_color", Color(0.4, 0.9, 0.5))
-				own_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-				price_vbox.add_child(own_lbl)
-			
-			h_box.add_child(strip)
-			
-			var spacer_strip = Control.new()
-			spacer_strip.custom_minimum_size.x = 8
-			spacer_strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			h_box.add_child(spacer_strip)
-			
-			h_box.add_child(info_vbox)
-			h_box.add_child(price_vbox)
-			
-			margin.add_child(h_box)
-			btn.add_child(margin)
-			
-			drawer_list.add_child(btn)
-
+		
 	side_drawer.visible = true
 	if drawer_panel:
 		drawer_panel.position.x = -drawer_panel.size.x
 		var tween = create_tween()
 		tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		tween.tween_property(drawer_panel, "position:x", 0.0, 0.3)
+	
+	rebuild_lists()
 
 func _get_category_color(category: String) -> Color:
 	match category:
@@ -508,15 +435,27 @@ func _apply_visual_styling() -> void:
 		style.content_margin_left = 10
 		input_usd.add_theme_stylebox_override("normal", style)
 		input_usd.add_theme_stylebox_override("focus", style)
+	
+	if stock_search_bar:
+		var style = _get_card_style(Color(0.15, 0.15, 0.2))
+		style.content_margin_left = 10
+		stock_search_bar.add_theme_stylebox_override("normal", style)
+		stock_search_bar.add_theme_stylebox_override("focus", style)
 
 # =============================================================================
 # MINIGAMES - Type Game & Social Engineering
 # =============================================================================
 
 func _on_type_game_pressed() -> void:
+	if GameManager.active_minigame != "type" and GameManager.active_minigame != "":
+		var game_name = "Hacker Challenge" if GameManager.active_minigame == "type" else "Social Engineering"
+		_get_notif_popup().show_notification("Today's opportunity is: " + game_name + ". Play that one instead!")
+		return
+	
 	if active_minigame_layer != null and is_instance_valid(active_minigame_layer):
 		_on_notification_received("Minigame already active!")
 		return
+	
 	var game = preload("res://Scenes/type_minigame.tscn").instantiate()
 	active_minigame_layer = CanvasLayer.new()
 	active_minigame_layer.layer = 10
@@ -527,27 +466,26 @@ func _on_type_game_pressed() -> void:
 			active_minigame_layer.queue_free()
 		active_minigame_layer = null
 	)
-	var btn = Button.new()
-	btn.text = "EXIT"
-	btn.position = Vector2(20, 20)
-	btn.size = Vector2(80, 40)
-	btn.pressed.connect(func(): game.queue_free())
-	game.add_child(btn)
+	
 	get_tree().root.add_child(active_minigame_layer)
 
 func _on_minigame_won() -> void:
-	AudioManager.play_hacker_win() # Sound Effect
+	AudioManager.play_hacker_win()
 	_on_notification_received("Accessing Insider Network...")
 	await get_tree().create_timer(0.5).timeout
 	market_manager.generate_insider_news()
 
 func _on_social_game_pressed() -> void:
+	if GameManager.active_minigame != "social" and GameManager.active_minigame != "":
+		var game_name = "Hacker Challenge" if GameManager.active_minigame == "type" else "Social Engineering"
+		_get_notif_popup().show_notification("Today's opportunity is: " + game_name + ". Play that one instead!")
+		return
+	
 	if active_minigame_layer != null and is_instance_valid(active_minigame_layer):
 		_on_notification_received("Minigame already active!")
 		return
 	
 	var game = preload("res://Scenes/social_engineering_game.tscn").instantiate()
-	
 	active_minigame_layer = CanvasLayer.new()
 	active_minigame_layer.layer = 10
 	active_minigame_layer.add_child(game)
@@ -565,13 +503,13 @@ func _on_social_game_pressed() -> void:
 
 func _on_social_game_finished(success: bool) -> void:
 	if success:
-		AudioManager.play_social_win() # Sound Effect
+		AudioManager.play_social_win()
 		_on_notification_received("Social Engineering Successful! Market Trend Manipulated.")
 		var idx = randi() % market_manager.active_stocks.size()
 		if market_manager.has_method("apply_insider_info"):
 			market_manager.apply_insider_info(idx, 0.15)
 	else:
-		AudioManager.play_bad_notification() # Sound Effect
+		AudioManager.play_bad_notification()
 		_on_notification_received("Social Engineering Failed! You were blocked.")
 
 # =============================================================================
@@ -596,16 +534,38 @@ func _calculate_slider_amount() -> void:
 	var safe_usd = floor(calculated_usd * 100.0) / 100.0
 	input_usd.text = str(safe_usd)
 
+func _on_input_usd_text_changed(new_text: String) -> void:
+	if not amount_slider:
+		return
+	
+	var cash = GameManager.player_money
+	var limit = cash
+	if selected_stock_index != -1:
+		var stock = market_manager.active_stocks[selected_stock_index]
+		var owned_qty = GameManager.portfolio.get(stock.company_name, 0.0)
+		var owned_val = owned_qty * stock.current_price
+		limit = max(cash, owned_val)
+	
+	var entered_usd = new_text.to_float() if new_text.is_valid_float() else 0.0
+	
+	if entered_usd > limit:
+		entered_usd = limit
+		input_usd.text = str(floor(limit * 100.0) / 100.0)
+	
+	var new_pct = (entered_usd / limit) * 100.0 if limit > 0 else 0.0
+	amount_slider.set_value_no_signal(new_pct)
+	
+	if slider_label:
+		slider_label.text = str(int(new_pct)) + "%"
+
 # =============================================================================
 # NEWS & NOTIFICATIONS SYSTEM
 # =============================================================================
 
 func _on_news_received(stock_name: String, impact: float, message: String) -> void:
-	# REPLACED WEIRD SYMBOLS WITH EMOJIS
 	var impact_str = "📈" if impact > 0 else "📉"
 	var color = Color(0.3, 0.9, 0.4) if impact > 0 else Color(0.9, 0.3, 0.3)
 	
-	# Sound Effect logic
 	if impact > 0:
 		AudioManager.play_notification()
 	else:
@@ -617,9 +577,12 @@ func _on_news_received(stock_name: String, impact: float, message: String) -> vo
 	_add_log_label(text, color)
 
 func _on_notification_received(message: String) -> void:
-	AudioManager.play_notification() # Sound Effect
-	# REPLACED WEIRD SYMBOL WITH EMOJI
+	AudioManager.play_notification()
 	_add_log_label("🔔 " + message, Color(1, 0.8, 0.4))
+
+func _on_minigame_opportunity(type: String) -> void:
+	var game_name = "Hacker Challenge" if type == "type" else "Social Engineering"
+	_get_notif_popup().show_notification("DAILY OPPORTUNITY: " + game_name + " is available! Click the minigame button to play.")
 
 func _add_log_label(text: String, color: Color) -> void:
 	if not news_vbox_panel:
@@ -648,19 +611,12 @@ func _on_pinjol_btn_pressed() -> void:
 
 func _on_pay_debt_btn_pressed() -> void:
 	var popup = pay_debt_popup_scene.instantiate()
+	popup.repay_confirmed.connect(_on_repay_confirmed)
 	add_child(popup)
-	popup.popup_centered()
+	popup.open(GameManager.player_money, GameManager.debt_amount)
 
-func get_news_items() -> Array:
-	var items = []
-	if news_vbox_panel:
-		for child in news_vbox_panel.get_children():
-			if child is Label:
-				items.append({
-					"text": child.text,
-					"color": child.get_theme_color("font_color")
-				})
-	return items
+func _on_repay_confirmed(amount: float) -> void:
+	GameManager.pay_debt(amount)
 
 # =============================================================================
 # DAY CYCLE & FINANCIAL SUMMARY
@@ -801,8 +757,19 @@ func rebuild_lists() -> void:
 		return
 	
 	var grouped_stocks = {}
+	var matching_stocks_count = 0
+	
 	for i in range(market_manager.active_stocks.size()):
 		var stock = market_manager.active_stocks[i]
+		
+		# SEARCH FILTER LOGIC
+		if current_search_query != "":
+			var matches_name = stock.company_name.to_lower().contains(current_search_query)
+			var matches_symbol = stock.symbol.to_lower().contains(current_search_query)
+			if not (matches_name or matches_symbol):
+				continue
+		
+		matching_stocks_count += 1
 		if not grouped_stocks.has(stock.category):
 			grouped_stocks[stock.category] = []
 		grouped_stocks[stock.category].append({"stock": stock, "index": i})
@@ -814,6 +781,14 @@ func rebuild_lists() -> void:
 	
 	var container = stock_list_container
 	if not container:
+		return
+		
+	if matching_stocks_count == 0:
+		var empty_lbl = Label.new()
+		empty_lbl.text = "No stocks match your search."
+		empty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		empty_lbl.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		container.add_child(empty_lbl)
 		return
 	
 	for cat_name in category_order:
@@ -931,7 +906,6 @@ func _on_stock_selected(index: int) -> void:
 		owned_label.modulate = Color(0.4, 0.7, 1.0)
 		var owned = GameManager.portfolio.get(stock.company_name, 0.0)
 		var val = owned * stock.current_price
-		# REPLACED WEIRD SYMBOL WITH EMOJI
 		owned_label.text = "💼 You Own: %s ($%s)" % [str(snapped(owned, 0.001)), str(snapped(val, 0.1))]
 	else:
 		_refresh_futures_ui()
@@ -962,10 +936,8 @@ func _update_price_graph(stock: Resource) -> void:
 
 func _update_ui(_v = null) -> void:
 	if wallet_label:
-		# REPLACED WEIRD SYMBOL WITH EMOJI
 		wallet_label.text = "💰 $" + str(snapped(GameManager.player_money, 0.01))
 	if debt_label:
-		# REPLACED WEIRD SYMBOL WITH EMOJI
 		debt_label.text = "💳 $" + str(snapped(GameManager.debt_amount, 0.01))
 	_calculate_slider_amount()
 

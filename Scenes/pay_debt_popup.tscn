@@ -65,40 +65,65 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="PayDebtPopup" type="PopupPanel" unique_id=1711431909]
-oversampling_override = 1.0
-title = "Repay Debt"
-size = Vector2i(420, 320)
-visible = true
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+[node name="PayDebtPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_paydebt")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1411981178]
-offset_left = 12.0
-offset_top = 12.0
-offset_right = 408.0
-offset_bottom = 308.0
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(420, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -160.0
+offset_right = 210.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -148.0
+offset_right = 198.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 16
 
-[node name="Header" type="Label" parent="VBoxContainer" unique_id=1647376453]
+[node name="Header" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_font_sizes/font_size = 20
 text = "💳 Repay Loan"
 horizontal_alignment = 1
 
-[node name="InfoPanel" type="PanelContainer" parent="VBoxContainer" unique_id=1456308625]
+[node name="InfoPanel" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_info")
 
-[node name="Margin" type="MarginContainer" parent="VBoxContainer/InfoPanel" unique_id=1136774037]
+[node name="Margin" type="MarginContainer" parent="VBoxContainer/InfoPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="InfoLabel" type="Label" parent="VBoxContainer/InfoPanel/Margin" unique_id=2024918662]
+[node name="InfoLabel" type="Label" parent="VBoxContainer/InfoPanel/Margin"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
 theme_override_constants/line_spacing = 6
@@ -106,31 +131,31 @@ text = "Debt: $0
 Wallet: $0"
 horizontal_alignment = 1
 
-[node name="SliderContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=607654149]
+[node name="SliderContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Label" type="Label" parent="VBoxContainer/SliderContainer" unique_id=1613373468]
+[node name="Label" type="Label" parent="VBoxContainer/SliderContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 theme_override_font_sizes/font_size = 12
 text = "Quick Adjust"
 
-[node name="AmountSlider" type="HSlider" parent="VBoxContainer/SliderContainer" unique_id=1595535464]
+[node name="AmountSlider" type="HSlider" parent="VBoxContainer/SliderContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="InputContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=914168801]
+[node name="InputContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/InputContainer" unique_id=1072492299]
+[node name="Label" type="Label" parent="VBoxContainer/InputContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.8, 0.5, 1)
 theme_override_font_sizes/font_size = 24
 text = "$ "
 
-[node name="AmountInput" type="LineEdit" parent="VBoxContainer/InputContainer" unique_id=878593621]
+[node name="AmountInput" type="LineEdit" parent="VBoxContainer/InputContainer"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -139,12 +164,12 @@ placeholder_text = "0.00"
 alignment = 1
 flat = true
 
-[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer" unique_id=166837566]
+[node name="ActionButtons" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="CancelBtn" type="Button" parent="VBoxContainer/ActionButtons" unique_id=552856889]
+[node name="CancelBtn" type="Button" parent="VBoxContainer/ActionButtons"]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_cancel_normal")
@@ -154,7 +179,7 @@ text = "Cancel"
 [node name="ButtonAudio" type="Node" parent="VBoxContainer/ActionButtons/CancelBtn"]
 script = ExtResource("2_audio")
 
-[node name="ConfirmBtn" type="Button" parent="VBoxContainer/ActionButtons" unique_id=1828490155]
+[node name="ConfirmBtn" type="Button" parent="VBoxContainer/ActionButtons"]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
@@ -165,3 +190,6 @@ text = "PAY NOW"
 
 [node name="ButtonAudio" type="Node" parent="VBoxContainer/ActionButtons/ConfirmBtn"]
 script = ExtResource("2_audio")
+
+[connection signal="pressed" from="VBoxContainer/ActionButtons/CancelBtn" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="VBoxContainer/ActionButtons/ConfirmBtn" to="." method="_on_pay_now_pressed"]

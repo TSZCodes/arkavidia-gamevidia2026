@@ -722,6 +722,17 @@ flat = true
 [node name="ButtonAudio" type="Node" parent="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox/CloseBtn"]
 script = ExtResource("3_audio")
 
+[node name="SearchContainer" type="PanelContainer" parent="SideDrawer/DrawerPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="StockSearchBar" type="LineEdit" parent="SideDrawer/DrawerPanel/Margin/VBox/SearchContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+placeholder_text = "🔍 Search Name or Symbol..."
+flat = true
+
 [node name="Scroll" type="ScrollContainer" parent="SideDrawer/DrawerPanel/Margin/VBox" unique_id=636879603]
 layout_mode = 2
 size_flags_vertical = 3

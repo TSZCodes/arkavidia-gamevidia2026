@@ -7,6 +7,7 @@ signal money_changed(new_amount)
 signal day_changed(new_day)
 signal debt_changed(new_debt)
 signal notif_message(text)
+signal minigame_opportunity(type: String) # Added for daily minigame notifications
 
 var player_money: float = 1000.0
 var current_day: int = 1
@@ -23,11 +24,18 @@ var futures_positions: Dictionary = {}
 
 var history_log: Array = []
 
+# Tracks which minigame is valid today
+var active_minigame: String = "" 
+
 func _ready() -> void:
 	emit_signal("money_changed", player_money)
 	emit_signal("day_changed", current_day)
 	emit_signal("debt_changed", debt_amount)
 	log_history(1000.0)
+	
+	# Initial delay for first notification
+	await get_tree().create_timer(1.5).timeout
+	_determine_daily_event()
 
 func add_money(amount: float) -> void:
 	player_money += amount
@@ -60,12 +68,27 @@ func pay_debt(amount: float) -> void:
 
 func next_day() -> void:
 	current_day += 1
+	active_minigame = "" # Reset daily event
 	emit_signal("day_changed", current_day)
+	
 	if current_day % interest_cycle_days == 0:
 		var interest = debt_amount * daily_interest_rate
 		debt_amount += interest
 		emit_signal("debt_changed", debt_amount)
 		emit_signal("notif_message", "10-Day Cycle: 5% Interest Added to Debt")
+	
+	# Delay 2 seconds after sleeping before showing the new opportunity
+	await get_tree().create_timer(2.0).timeout
+	_determine_daily_event()
+
+func _determine_daily_event() -> void:
+	var roll = randf()
+	if roll > 0.5:
+		active_minigame = "type"
+		minigame_opportunity.emit("type")
+	else:
+		active_minigame = "social"
+		minigame_opportunity.emit("social")
 
 func log_history(net_worth: float) -> void:
 	var entry = {
