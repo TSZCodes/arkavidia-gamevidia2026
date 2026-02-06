@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://befypl0r8etlo"]
 
 [ext_resource type="Script" uid="uid://60fextfqw3u8" path="res://Scripts/pay_debt_popup.gd" id="1_paydebt"]
+[ext_resource type="Script" path="res://Scripts/button_audio.gd" id="2_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 content_margin_left = 0.0
@@ -150,6 +151,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_cancel_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_cancel_hover")
 text = "Cancel"
 
+[node name="ButtonAudio" type="Node" parent="VBoxContainer/ActionButtons/CancelBtn"]
+script = ExtResource("2_audio")
+
 [node name="ConfirmBtn" type="Button" parent="VBoxContainer/ActionButtons" unique_id=1828490155]
 custom_minimum_size = Vector2(140, 36)
 layout_mode = 2
@@ -158,3 +162,6 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pay_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_pay_hover")
 text = "PAY NOW"
+
+[node name="ButtonAudio" type="Node" parent="VBoxContainer/ActionButtons/ConfirmBtn"]
+script = ExtResource("2_audio")

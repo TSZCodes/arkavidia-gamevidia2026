@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b5f3n3dgctu3f"]
 
 [ext_resource type="Script" uid="uid://dq5oq8jbhldjk" path="res://Scripts/main_menu.gd" id="1_m4n5o"]
+[ext_resource type="Script" uid="uid://cl8m03jfcrhdr" path="res://Scripts/button_audio.gd" id="2_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.08, 0.08, 0.1, 1)
@@ -107,6 +108,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_start_hover")
 text = "START GAME"
 
+[node name="ButtonAudio" type="Node" parent="CenterContainer/VBoxContainer/Buttons/StartBtn" unique_id=434557641]
+script = ExtResource("2_audio")
+
 [node name="SettingsBtn" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=940111294]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
@@ -116,6 +120,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "SETTINGS"
 
+[node name="ButtonAudio" type="Node" parent="CenterContainer/VBoxContainer/Buttons/SettingsBtn" unique_id=1601481081]
+script = ExtResource("2_audio")
+
 [node name="QuitBtn" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=102530718]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
@@ -124,6 +131,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "QUIT"
+
+[node name="ButtonAudio" type="Node" parent="CenterContainer/VBoxContainer/Buttons/QuitBtn" unique_id=5128248]
+script = ExtResource("2_audio")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Buttons/StartBtn" to="." method="_on_start_btn_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Buttons/SettingsBtn" to="." method="_on_settings_btn_pressed"]

@@ -536,6 +536,7 @@ func _on_type_game_pressed() -> void:
 	get_tree().root.add_child(active_minigame_layer)
 
 func _on_minigame_won() -> void:
+	AudioManager.play_hacker_win() # Sound Effect
 	_on_notification_received("Accessing Insider Network...")
 	await get_tree().create_timer(0.5).timeout
 	market_manager.generate_insider_news()
@@ -564,11 +565,13 @@ func _on_social_game_pressed() -> void:
 
 func _on_social_game_finished(success: bool) -> void:
 	if success:
+		AudioManager.play_social_win() # Sound Effect
 		_on_notification_received("Social Engineering Successful! Market Trend Manipulated.")
 		var idx = randi() % market_manager.active_stocks.size()
 		if market_manager.has_method("apply_insider_info"):
 			market_manager.apply_insider_info(idx, 0.15)
 	else:
+		AudioManager.play_bad_notification() # Sound Effect
 		_on_notification_received("Social Engineering Failed! You were blocked.")
 
 # =============================================================================
@@ -598,14 +601,24 @@ func _calculate_slider_amount() -> void:
 # =============================================================================
 
 func _on_news_received(stock_name: String, impact: float, message: String) -> void:
+	# REPLACED WEIRD SYMBOLS WITH EMOJIS
 	var impact_str = "📈" if impact > 0 else "📉"
 	var color = Color(0.3, 0.9, 0.4) if impact > 0 else Color(0.9, 0.3, 0.3)
+	
+	# Sound Effect logic
+	if impact > 0:
+		AudioManager.play_notification()
+	else:
+		AudioManager.play_bad_notification()
+		
 	var pct = snapped(impact * 100, 0.1)
 	var sign_str = "+" if impact > 0 else ""
 	var text = "[INSIDER] %s %s (%s%s%%)\n%s" % [impact_str, stock_name, sign_str, str(pct), message]
 	_add_log_label(text, color)
 
 func _on_notification_received(message: String) -> void:
+	AudioManager.play_notification() # Sound Effect
+	# REPLACED WEIRD SYMBOL WITH EMOJI
 	_add_log_label("🔔 " + message, Color(1, 0.8, 0.4))
 
 func _add_log_label(text: String, color: Color) -> void:
@@ -918,7 +931,8 @@ func _on_stock_selected(index: int) -> void:
 		owned_label.modulate = Color(0.4, 0.7, 1.0)
 		var owned = GameManager.portfolio.get(stock.company_name, 0.0)
 		var val = owned * stock.current_price
-		owned_label.text = "💰 You Own: %s ($%s)" % [str(snapped(owned, 0.001)), str(snapped(val, 0.1))]
+		# REPLACED WEIRD SYMBOL WITH EMOJI
+		owned_label.text = "💼 You Own: %s ($%s)" % [str(snapped(owned, 0.001)), str(snapped(val, 0.1))]
 	else:
 		_refresh_futures_ui()
 	_calculate_slider_amount()
@@ -948,8 +962,10 @@ func _update_price_graph(stock: Resource) -> void:
 
 func _update_ui(_v = null) -> void:
 	if wallet_label:
+		# REPLACED WEIRD SYMBOL WITH EMOJI
 		wallet_label.text = "💰 $" + str(snapped(GameManager.player_money, 0.01))
 	if debt_label:
+		# REPLACED WEIRD SYMBOL WITH EMOJI
 		debt_label.text = "💳 $" + str(snapped(GameManager.debt_amount, 0.01))
 	_calculate_slider_amount()
 

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://history_popup"]
 
 [ext_resource type="Script" path="res://Scripts/history_window.gd" id="1_history"]
+[ext_resource type="Script" path="res://Scripts/button_audio.gd" id="2_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.13, 0.13, 0.16, 0.95)
@@ -96,3 +97,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_close")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_close_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_close_pressed")
 text = "CLOSE"
+
+[node name="ButtonAudio" type="Node" parent="PanelContainer/MarginContainer/VBoxContainer/CloseBtn"]
+script = ExtResource("2_audio")

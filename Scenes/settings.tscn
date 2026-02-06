@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b8q6y5x4w3e2r"]
 
 [ext_resource type="Script" uid="uid://cn2q3y4x5z6a1" path="res://Scripts/settings.gd" id="1_a2b3c"]
+[ext_resource type="Script" path="res://Scripts/button_audio.gd" id="2_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.08, 0.08, 0.1, 1)
@@ -170,6 +171,9 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 text = "BACK"
 
+[node name="ButtonAudio" type="Node" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/BackBtn"]
+script = ExtResource("2_audio")
+
 [node name="MenuBtn" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
@@ -178,6 +182,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 text = "EXIT TO MAIN MENU"
+
+[node name="ButtonAudio" type="Node" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/MenuBtn"]
+script = ExtResource("2_audio")
 
 [connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/BackBtn" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/MenuBtn" to="." method="_on_main_menu_pressed"]

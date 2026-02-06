@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhay62pyimkar" path="res://Scripts/crypto_dashboard.gd" id="1_ijr2s"]
 [ext_resource type="Script" uid="uid://csmjlpqlijv2v" path="res://Scripts/candle_chart.gd" id="2_candle"]
+[ext_resource type="Script" path="res://Scripts/button_audio.gd" id="3_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.08, 0.08, 0.1, 1)
@@ -230,6 +231,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hamburger")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hamburger")
 text = "☰"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HamburgerBtn"]
+script = ExtResource("3_audio")
+
 [node name="WalletLabel" type="Label" parent="RootVBox/TopBar/MarginContainer/HBoxContainer" unique_id=1217488680]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.9, 0.4, 1)
@@ -270,6 +274,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_history_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_history_hover")
 text = "📜 HISTORY"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/HistoryBtn"]
+script = ExtResource("3_audio")
+
 [node name="NextDayBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=797924841]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
@@ -280,6 +287,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sleep_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_sleep_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_sleep_hover")
 text = "🌙 SLEEP"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/NextDayBtn"]
+script = ExtResource("3_audio")
 
 [node name="PinjolBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=392018152]
 custom_minimum_size = Vector2(100, 36)
@@ -292,6 +302,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_loan_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_loan_hover")
 text = "⚠️ LOAN"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/PinjolBtn"]
+script = ExtResource("3_audio")
+
 [node name="PayDebtBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=392018153]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
@@ -302,6 +315,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pay_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pay_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_pay_hover")
 text = "💸 PAY DEBT"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/PayDebtBtn"]
+script = ExtResource("3_audio")
 
 [node name="ScreenViewport" type="Control" parent="RootVBox" unique_id=2110665899]
 clip_contents = true
@@ -431,11 +447,17 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_toggle_normal")
 text = "SPOT"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle/BtnSpot"]
+script = ExtResource("3_audio")
+
 [node name="BtnFutures" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle" unique_id=129179537]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_toggle_normal")
 text = "FUTURES"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle/BtnFutures"]
+script = ExtResource("3_audio")
 
 [node name="OwnedLabel" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=582378839]
 layout_mode = 2
@@ -492,6 +514,9 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "🟢 BUY"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT/BtnBuy"]
+script = ExtResource("3_audio")
+
 [node name="BtnSell" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT" unique_id=1242269486]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -500,6 +525,9 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "🔴 SELL"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT/BtnSell"]
+script = ExtResource("3_audio")
 
 [node name="FUTURES" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer" unique_id=1883292312]
 visible = false
@@ -515,6 +543,9 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "📈 LONG"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES/BtnLong"]
+script = ExtResource("3_audio")
+
 [node name="BtnShort" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES" unique_id=362837000]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -523,6 +554,9 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "📉 SHORT"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES/BtnShort"]
+script = ExtResource("3_audio")
 
 [node name="Screen2" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer" unique_id=469268151]
 layout_mode = 0
@@ -614,6 +648,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
 text = "TYPING MINIGAME"
 
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn"]
+script = ExtResource("3_audio")
+
 [node name="SocialGameBtn" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197999]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -623,6 +660,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_minigame_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
 text = "SOCIAL ENGINEERING"
+
+[node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn"]
+script = ExtResource("3_audio")
 
 [node name="HSeparator" type="HSeparator" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
 layout_mode = 2
@@ -678,6 +718,9 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "❌"
 flat = true
+
+[node name="ButtonAudio" type="Node" parent="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox/CloseBtn"]
+script = ExtResource("3_audio")
 
 [node name="Scroll" type="ScrollContainer" parent="SideDrawer/DrawerPanel/Margin/VBox" unique_id=636879603]
 layout_mode = 2

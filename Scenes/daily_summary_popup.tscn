@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://daily_summary"]
 
 [ext_resource type="Script" path="res://Scripts/daily_summary_popup.gd" id="1_daily"]
+[ext_resource type="Script" path="res://Scripts/button_audio.gd" id="2_audio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.13, 0.13, 0.16, 0.95)
@@ -149,3 +150,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_confirm")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_confirm_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_confirm_pressed")
 text = "CONTINUE TO NEXT DAY"
+
+[node name="ButtonAudio" type="Node" parent="PanelContainer/MarginContainer/VBoxContainer/CloseBtn"]
+script = ExtResource("2_audio")

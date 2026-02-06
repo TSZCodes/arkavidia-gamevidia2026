@@ -8,19 +8,32 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
-config/name="Gamevidia-2026"
-run/main_scene="uid://b5f3n3dgctu3f"
+config/name="Arkavidia - Gamevidia 2026"
+run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://d23wvl8bfhtve"
-EventBus="*uid://clyrr01ejohpe"
-SceneManager="*uid://dhkbjq4rio4i6"
-SaveSystem="*uid://dxodynklwuap1"
+GameManager="*res://Scripts/game_manager.gd"
+EventBus="*res://Scripts/event_bus.gd"
+SceneManager="*res://Scripts/SceneManager.gd"
+SaveSystem="*res://Resource/save/save_system.gd"
+AudioManager="*uid://cjp2y0ucrf55q"
+
+[display]
+
+window/stretch/mode="canvas_items"
+
+[global_group]
+
+Post="Group for instantiated posts"
 
 [physics]
 
@@ -29,3 +42,5 @@ SaveSystem="*uid://dxodynklwuap1"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
