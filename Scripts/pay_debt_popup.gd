@@ -1,10 +1,13 @@
 extends PopupPanel
 
-@onready var info_label = $VBoxContainer/InfoPanel/Margin/InfoLabel
-@onready var slider = $VBoxContainer/SliderContainer/AmountSlider
-@onready var input = $VBoxContainer/InputContainer/AmountInput
-@onready var btn_confirm = $VBoxContainer/ActionButtons/ConfirmBtn
-@onready var btn_cancel = $VBoxContainer/ActionButtons/CancelBtn
+# Pay Debt Popup - Debt Repayment Interface
+# Allows player to pay down their debt using available cash
+
+@onready var info_label = %InfoLabel
+@onready var slider = %AmountSlider
+@onready var input = %AmountInput
+@onready var btn_confirm = %ConfirmBtn
+@onready var btn_cancel = %CancelBtn
 
 var max_payable: float = 0.0
 
@@ -14,8 +17,10 @@ func _ready() -> void:
 		return
 	btn_cancel.pressed.connect(func(): queue_free())
 	btn_confirm.pressed.connect(_on_pay_pressed)
-	if slider: slider.value_changed.connect(_on_slider_changed)
-	if input: input.text_changed.connect(_on_text_changed)
+	if slider:
+		slider.value_changed.connect(_on_slider_changed)
+	if input:
+		input.text_changed.connect(_on_text_changed)
 	_setup_ui()
 
 func _setup_ui() -> void:
@@ -34,11 +39,14 @@ func _setup_ui() -> void:
 	if max_payable <= 0:
 		btn_confirm.disabled = true
 		btn_confirm.text = "NO FUNDS"
-		if input: input.editable = false
-		if slider: slider.editable = false
+		if input:
+			input.editable = false
+		if slider:
+			slider.editable = false
 
 func _on_slider_changed(value: float) -> void:
-	if input: input.text = str(value)
+	if input:
+		input.text = str(value)
 
 func _on_text_changed(text: String) -> void:
 	if text.is_valid_float():
@@ -47,10 +55,12 @@ func _on_text_changed(text: String) -> void:
 			val = max_payable
 			input.text = str(val)
 			input.caret_column = text.length()
-		if slider: slider.set_value_no_signal(val)
+		if slider:
+			slider.set_value_no_signal(val)
 
 func _on_pay_pressed() -> void:
-	if not input: return
+	if not input:
+		return
 	var amount = float(input.text)
 	if amount > 0:
 		GameManager.pay_debt(amount)

@@ -3,7 +3,168 @@
 [ext_resource type="Script" uid="uid://dhay62pyimkar" path="res://Scripts/crypto_dashboard.gd" id="1_ijr2s"]
 [ext_resource type="Script" uid="uid://csmjlpqlijv2v" path="res://Scripts/candle_chart.gd" id="2_candle"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panels"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_topbar"]
+bg_color = Color(0.13, 0.13, 0.16, 1)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hamburger"]
+bg_color = Color(0.1, 0.1, 0.1, 0)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_normal"]
+bg_color = Color(0.2, 0.25, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_pressed"]
+bg_color = Color(0.15, 0.2, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_history_hover"]
+bg_color = Color(0.3, 0.35, 0.45, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_sleep_normal"]
+bg_color = Color(0.25, 0.2, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_sleep_pressed"]
+bg_color = Color(0.18, 0.15, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_sleep_hover"]
+bg_color = Color(0.35, 0.3, 0.55, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_loan_normal"]
+bg_color = Color(0.6, 0.4, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_loan_pressed"]
+bg_color = Color(0.45, 0.3, 0.08, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_loan_hover"]
+bg_color = Color(0.7, 0.5, 0.2, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pay_normal"]
+bg_color = Color(0.15, 0.45, 0.3, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pay_pressed"]
+bg_color = Color(0.1, 0.35, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pay_hover"]
+bg_color = Color(0.2, 0.55, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_card"]
+bg_color = Color(0.13, 0.13, 0.16, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_graph_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_toggle_normal"]
+bg_color = Color(0.1, 0.1, 0.12, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
+bg_color = Color(0.2, 0.2, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_minigame_normal"]
+bg_color = Color(0.18, 0.18, 0.22, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.35, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_minigame_hover"]
+bg_color = Color(0.25, 0.25, 0.3, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.5, 0.6, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drawer_bg"]
+bg_color = Color(0.1, 0.1, 0.12, 1)
+border_width_right = 1
+border_color = Color(1, 1, 1, 0.1)
+shadow_size = 10
 
 [node name="CryptoDashboard" type="Control" unique_id=1836389153 node_paths=PackedStringArray("stock_list_container", "wallet_label", "debt_label", "trading_panel", "header_label", "price_label", "owned_label", "candle_chart", "input_usd", "amount_slider", "slider_label", "news_vbox_panel")]
 layout_mode = 3
@@ -16,24 +177,24 @@ script = ExtResource("1_ijr2s")
 stock_list_container = NodePath("SideDrawer/DrawerPanel/Margin/VBox/Scroll/DrawerList")
 wallet_label = NodePath("RootVBox/TopBar/MarginContainer/HBoxContainer/WalletLabel")
 debt_label = NodePath("RootVBox/TopBar/MarginContainer/HBoxContainer/DebtLabel")
-trading_panel = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel")
-header_label = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/HeaderInfo")
-price_label = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/PriceRow/PriceLabel")
-owned_label = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/OwnedLabel")
-candle_chart = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/CandleChart")
-input_usd = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/InputContainer/InputUSD")
-amount_slider = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer/AmountSlider")
-slider_label = NodePath("RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer/SliderLabel")
-news_vbox_panel = NodePath("RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll/NewsVBox")
+trading_panel = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel")
+header_label = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TopInfoRow/HeaderInfo")
+price_label = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TopInfoRow/PriceLabel")
+owned_label = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/OwnedLabel")
+candle_chart = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/CandleChart")
+input_usd = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/InputContainer/InputUSD")
+amount_slider = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer/AmountSlider")
+slider_label = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer/SliderLabel")
+news_vbox_panel = NodePath("RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll/NewsVBox")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1150745779]
+[node name="Background" type="Panel" parent="." unique_id=1150745779]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.08, 0.1, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
 [node name="RootVBox" type="VBoxContainer" parent="." unique_id=123987123]
 layout_mode = 1
@@ -48,27 +209,26 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
-
-[node name="TopBarBg" type="ColorRect" parent="RootVBox/TopBar" unique_id=999999991]
-layout_mode = 2
-color = Color(0.13, 0.13, 0.16, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_topbar")
 
 [node name="MarginContainer" type="MarginContainer" parent="RootVBox/TopBar" unique_id=774192201]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="RootVBox/TopBar/MarginContainer" unique_id=610278143]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="HamburgerBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer" unique_id=881928399]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_hamburger")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hamburger")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hamburger")
 text = "☰"
-flat = true
 
 [node name="WalletLabel" type="Label" parent="RootVBox/TopBar/MarginContainer/HBoxContainer" unique_id=1217488680]
 layout_mode = 2
@@ -97,139 +257,123 @@ size_flags_horizontal = 3
 
 [node name="HBoxActions" type="HBoxContainer" parent="RootVBox/TopBar/MarginContainer/HBoxContainer" unique_id=797924842]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
 [node name="HistoryBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=888888881]
-custom_minimum_size = Vector2(80, 36)
+custom_minimum_size = Vector2(90, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.8, 1, 1)
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_history_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_history_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_history_hover")
 text = "📜 HISTORY"
 
 [node name="NextDayBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=797924841]
 custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sleep_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_sleep_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_sleep_hover")
 text = "🌙 SLEEP"
 
 [node name="PinjolBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=392018152]
-custom_minimum_size = Vector2(110, 36)
+custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_loan_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_loan_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_loan_hover")
 text = "⚠️ LOAN"
 
 [node name="PayDebtBtn" type="Button" parent="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions" unique_id=392018153]
-custom_minimum_size = Vector2(110, 36)
+custom_minimum_size = Vector2(100, 36)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.6, 1)
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_pay_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pay_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_pay_hover")
 text = "💸 PAY DEBT"
 
-[node name="MainLayout" type="HBoxContainer" parent="RootVBox" unique_id=2110665898]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-alignment = 1
-
-[node name="LeftPanel" type="VBoxContainer" parent="RootVBox/MainLayout" unique_id=1308435006]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.4
-theme_override_constants/separation = 10
-
-[node name="TradingPanel" type="PanelContainer" parent="RootVBox/MainLayout/LeftPanel" unique_id=563195989]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
-
-[node name="TradingBg" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/TradingPanel" unique_id=999999994]
-layout_mode = 2
-color = Color(0.13, 0.13, 0.16, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel" unique_id=505736170]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 10
-
-[node name="TradingVBox" type="VBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer" unique_id=356578768]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="HeaderInfo" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=1879810273]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 20
-text = "Select a coin to trade"
-horizontal_alignment = 1
-
-[node name="PriceRow" type="HBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=423402603]
-layout_mode = 2
-theme_override_constants/separation = 15
-alignment = 1
-
-[node name="PriceLabel" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/PriceRow" unique_id=423402602]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 24
-text = "$0.00"
-horizontal_alignment = 1
-
-[node name="GraphBackground" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=1164530516]
+[node name="ScreenViewport" type="Control" parent="RootVBox" unique_id=2110665899]
 clip_contents = true
-custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_vertical = 3
-color = Color(0.08, 0.08, 0.1, 1)
 
-[node name="GridLines" type="VBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=12491728]
+[node name="ScreensContainer" type="Control" parent="RootVBox/ScreenViewport" unique_id=2110665900]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
-alignment = 1
 
-[node name="Div1" type="Control" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/GridLines" unique_id=12066718]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Line" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/GridLines/Div1" unique_id=1945918725]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+[node name="Screen1" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer" unique_id=1145697333]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -1.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(1, 1, 1, 0.0588235)
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
 
-[node name="Div2" type="Control" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/GridLines" unique_id=70561499]
+[node name="LeftPanel" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1" unique_id=1308435006]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="TradingPanel" type="PanelContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel" unique_id=563195989]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
 
-[node name="Line" type="ColorRect" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/GridLines/Div2" unique_id=1638663230]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(1, 1, 1, 0.0588235)
-
-[node name="Div3" type="Control" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground/GridLines" unique_id=1728357315]
+[node name="MarginContainer" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel" unique_id=505736170]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 5
 
-[node name="CandleChart" type="Control" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=1766329023]
+[node name="TradingVBox" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer" unique_id=356578768]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TopInfoRow" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=423402603]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderInfo" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TopInfoRow" unique_id=1879810273]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Select a coin"
+vertical_alignment = 1
+
+[node name="PriceLabel" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TopInfoRow" unique_id=423402602]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 24
+text = "$0.00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GraphBackground" type="Panel" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=1164530516]
+clip_contents = true
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_graph_bg")
+
+[node name="CandleChart" type="Control" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=1766329023]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,233 +382,249 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_candle")
 
-[node name="MaxPrice" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=2045133121]
+[node name="MaxPrice" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=2045133121]
 layout_mode = 1
-offset_left = 5.0
-offset_top = 2.0
-offset_right = 65.0
-offset_bottom = 25.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 70.0
+offset_bottom = 28.0
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "100.00"
 
-[node name="MidPrice" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=961575196]
+[node name="MidPrice" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=961575196]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 5.0
+offset_left = 10.0
 offset_top = -11.5
-offset_right = 65.0
+offset_right = 70.0
 offset_bottom = 11.5
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "50.00"
 
-[node name="MinPrice" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=1352606387]
+[node name="MinPrice" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/GraphBackground" unique_id=1352606387]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -18.0
-offset_right = 65.0
-offset_bottom = 5.0
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 70.0
+offset_bottom = 3.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "0.00"
 
-[node name="TradeModeToggle" type="HBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=456456456]
-custom_minimum_size = Vector2(0, 30)
+[node name="TradeModeToggle" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=456456456]
+custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="BtnSpot" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle" unique_id=1647980734]
+[node name="BtnSpot" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle" unique_id=1647980734]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_toggle_normal")
 text = "SPOT"
 
-[node name="BtnFutures" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle" unique_id=129179537]
+[node name="BtnFutures" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TradeModeToggle" unique_id=129179537]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_toggle_normal")
 text = "FUTURES"
 
-[node name="OwnedLabel" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=582378839]
+[node name="OwnedLabel" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=582378839]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 text = "💼 Own: 0.00"
 horizontal_alignment = 1
 
-[node name="SliderContainer" type="HBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=999111222]
+[node name="SliderContainer" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=999111222]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SliderLabel" type="Label" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer" unique_id=999111224]
-custom_minimum_size = Vector2(50, 0)
+[node name="SliderLabel" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer" unique_id=999111224]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0%"
 
-[node name="AmountSlider" type="HSlider" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer" unique_id=999111223]
+[node name="AmountSlider" type="HSlider" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/SliderContainer" unique_id=999111223]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="InputContainer" type="PanelContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=999111225]
+[node name="InputContainer" type="PanelContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=999111225]
 layout_mode = 2
 
-[node name="InputUSD" type="LineEdit" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/InputContainer" unique_id=551088947]
-custom_minimum_size = Vector2(0, 35)
+[node name="InputUSD" type="LineEdit" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/InputContainer" unique_id=551088947]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.5)
+theme_override_colors/caret_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
 placeholder_text = "💵 Enter amount USD"
 alignment = 1
+backspace_deletes_composite_character_enabled = true
+flat = true
 
-[node name="TabContainer" type="TabContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=504307468]
-custom_minimum_size = Vector2(0, 50)
+[node name="ActionButtonsContainer" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox" unique_id=504307468]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-current_tab = 1
-tabs_visible = false
 
-[node name="SPOT" type="HBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer" unique_id=936611255]
+[node name="SPOT" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer" unique_id=936611255]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnBuy" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT" unique_id=2080491637]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = "🟢 BUY"
+
+[node name="BtnSell" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT" unique_id=1242269486]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = "🔴 SELL"
+
+[node name="FUTURES" type="HBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer" unique_id=1883292312]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
-metadata/_tab_index = 0
 
-[node name="BtnBuy" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/SPOT" unique_id=2080491637]
+[node name="BtnLong" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES" unique_id=784596068]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
-text = "🟢 BUY"
-
-[node name="BtnSell" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/SPOT" unique_id=1242269486]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-text = "🔴 SELL"
-
-[node name="FUTURES" type="HBoxContainer" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer" unique_id=1883292312]
-layout_mode = 2
-theme_override_constants/separation = 10
-metadata/_tab_index = 1
-
-[node name="BtnLong" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES" unique_id=784596068]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "📈 LONG"
 
-[node name="BtnShort" type="Button" parent="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES" unique_id=362837000]
+[node name="BtnShort" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES" unique_id=362837000]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "📉 SHORT"
 
-[node name="RightPanel" type="VBoxContainer" parent="RootVBox/MainLayout" unique_id=802197891]
+[node name="Screen2" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer" unique_id=469268151]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="RightPanel" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2" unique_id=802197891]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="NewsPanel" type="PanelContainer" parent="RootVBox/MainLayout/RightPanel" unique_id=802197892]
+[node name="NewsPanel" type="PanelContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel" unique_id=802197892]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
 
-[node name="NewsBg" type="ColorRect" parent="RootVBox/MainLayout/RightPanel/NewsPanel" unique_id=999999997]
+[node name="MarginContainer" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel" unique_id=1568579829]
 layout_mode = 2
-color = Color(0.13, 0.13, 0.16, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RootVBox/MainLayout/RightPanel/NewsPanel" unique_id=1568579829]
-layout_mode = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 10
 
-[node name="LayoutVBox" type="VBoxContainer" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer" unique_id=125778765]
+[node name="LayoutVBox" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer" unique_id=125778765]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="NewsHeader" type="Label" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=802197893]
+[node name="NewsHeader" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=802197893]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 16
 text = "📰 LIVE MARKET NEWS"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=1386746552]
+[node name="HSeparator" type="HSeparator" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=1386746552]
 layout_mode = 2
 
-[node name="NewsScroll" type="ScrollContainer" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=802197894]
+[node name="NewsScroll" type="ScrollContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox" unique_id=802197894]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="NewsVBox" type="VBoxContainer" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll" unique_id=802197895]
+[node name="NewsVBox" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll" unique_id=802197895]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 8
+theme_override_constants/separation = 10
 
-[node name="WelcomeLabel" type="Label" parent="RootVBox/MainLayout/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll/NewsVBox" unique_id=802197896]
+[node name="WelcomeLabel" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/NewsPanel/MarginContainer/LayoutVBox/NewsScroll/NewsVBox" unique_id=802197896]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 theme_override_font_sizes/font_size = 13
 text = "Waiting for market events..."
 autowrap_mode = 2
 
-[node name="MinigamePanel" type="PanelContainer" parent="RootVBox/MainLayout/RightPanel" unique_id=802197897]
+[node name="MinigamePanel" type="PanelContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel" unique_id=802197897]
 custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_card")
 
-[node name="MinigameBg" type="ColorRect" parent="RootVBox/MainLayout/RightPanel/MinigamePanel" unique_id=999999998]
+[node name="MarginContainer" type="MarginContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel" unique_id=602753351]
 layout_mode = 2
-color = Color(0.13, 0.13, 0.16, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RootVBox/MainLayout/RightPanel/MinigamePanel" unique_id=602753351]
-layout_mode = 2
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 15
 
-[node name="MinigameVBox" type="VBoxContainer" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer" unique_id=802197899]
+[node name="MinigameVBox" type="VBoxContainer" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer" unique_id=802197899]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="InsiderHeader" type="Label" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197898]
+[node name="InsiderHeader" type="Label" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197898]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "🕵️ INSIDER DATA"
 horizontal_alignment = 1
 
-[node name="TypeGameBtn" type="Button" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197900]
-custom_minimum_size = Vector2(0, 35)
+[node name="TypeGameBtn" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197900]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
 text = "TYPING MINIGAME"
 
-[node name="SocialGameBtn" type="Button" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197999]
-custom_minimum_size = Vector2(0, 35)
+[node name="SocialGameBtn" type="Button" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=802197999]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
 text = "SOCIAL ENGINEERING"
 
-[node name="HSeparator" type="HSeparator" parent="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
+[node name="HSeparator" type="HSeparator" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox" unique_id=574473759]
 layout_mode = 2
 
 [node name="SideDrawer" type="Control" parent="." unique_id=900000001]
@@ -491,22 +651,18 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 300.0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_panels")
-
-[node name="Bg" type="ColorRect" parent="SideDrawer/DrawerPanel" unique_id=1584673732]
-layout_mode = 2
-color = Color(0.1, 0.1, 0.12, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_drawer_bg")
 
 [node name="Margin" type="MarginContainer" parent="SideDrawer/DrawerPanel" unique_id=1398477423]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 25
 
 [node name="VBox" type="VBoxContainer" parent="SideDrawer/DrawerPanel/Margin" unique_id=1859398882]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="HeaderBox" type="HBoxContainer" parent="SideDrawer/DrawerPanel/Margin/VBox" unique_id=223212072]
 layout_mode = 2
@@ -514,8 +670,8 @@ layout_mode = 2
 [node name="Title" type="Label" parent="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox" unique_id=1650323913]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 20
-text = "ASSETS"
+theme_override_font_sizes/font_size = 22
+text = "Company Stocks"
 
 [node name="CloseBtn" type="Button" parent="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox" unique_id=1946643412]
 layout_mode = 2
@@ -530,17 +686,17 @@ size_flags_vertical = 3
 [node name="DrawerList" type="VBoxContainer" parent="SideDrawer/DrawerPanel/Margin/VBox/Scroll" unique_id=2003916740]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 5
+theme_override_constants/separation = 8
 
 [connection signal="pressed" from="RootVBox/TopBar/MarginContainer/HBoxContainer/HamburgerBtn" to="." method="_on_hamburger_btn_pressed"]
 [connection signal="pressed" from="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/HistoryBtn" to="." method="_on_history_btn_pressed"]
 [connection signal="pressed" from="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/NextDayBtn" to="." method="_on_next_day_btn_pressed"]
 [connection signal="pressed" from="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/PinjolBtn" to="." method="_on_pinjol_btn_pressed"]
 [connection signal="pressed" from="RootVBox/TopBar/MarginContainer/HBoxContainer/HBoxActions/PayDebtBtn" to="." method="_on_pay_debt_btn_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/SPOT/BtnBuy" to="." method="_on_btn_buy_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/SPOT/BtnSell" to="." method="_on_btn_sell_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES/BtnLong" to="." method="_on_futures_long_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/LeftPanel/TradingPanel/MarginContainer/TradingVBox/TabContainer/FUTURES/BtnShort" to="." method="_on_futures_short_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn" to="." method="_on_type_game_pressed"]
-[connection signal="pressed" from="RootVBox/MainLayout/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn" to="." method="_on_social_game_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT/BtnBuy" to="." method="_on_btn_buy_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/SPOT/BtnSell" to="." method="_on_btn_sell_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES/BtnLong" to="." method="_on_futures_long_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen1/LeftPanel/TradingPanel/MarginContainer/TradingVBox/ActionButtonsContainer/FUTURES/BtnShort" to="." method="_on_futures_short_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn" to="." method="_on_type_game_pressed"]
+[connection signal="pressed" from="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/SocialGameBtn" to="." method="_on_social_game_pressed"]
 [connection signal="pressed" from="SideDrawer/DrawerPanel/Margin/VBox/HeaderBox/CloseBtn" to="." method="_on_drawer_close_pressed"]

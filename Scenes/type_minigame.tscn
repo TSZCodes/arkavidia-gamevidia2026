@@ -2,6 +2,39 @@
 
 [ext_resource type="Script" uid="uid://dxr6ofo8h2llm" path="res://Scripts/type_minigame.gd" id="1_6r85y"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
+bg_color = Color(0.05, 0.05, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.8, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.2, 0.8, 0.4, 0.2)
+shadow_size = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_word_area"]
+bg_color = Color(0, 0, 0, 0.6)
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_abort"]
+bg_color = Color(0.8, 0.2, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_skip"]
+bg_color = Color(0.8, 0.6, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="typeMinigame" type="Control" node_paths=PackedStringArray("word_display")]
 layout_mode = 3
 anchors_preset = 15
@@ -19,7 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.05, 0.05, 0.08, 0.85)
+color = Color(0.02, 0.02, 0.03, 0.9)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -30,56 +63,44 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(250, 200)
+custom_minimum_size = Vector2(400, 250)
 layout_mode = 2
-
-[node name="Bg" type="ColorRect" parent="CenterContainer/Panel"]
-layout_mode = 2
-color = Color(0.1, 0.12, 0.15, 1)
-
-[node name="Border" type="ReferenceRect" parent="CenterContainer/Panel"]
-layout_mode = 2
-border_color = Color(0.2, 0.8, 0.4, 1)
-border_width = 2.0
-editor_only = false
+theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
 
 [node name="Margin" type="MarginContainer" parent="CenterContainer/Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="Title" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.2, 0.8, 0.4, 1)
-theme_override_font_sizes/font_size = 14
-text = "SYSTEM OVERRIDE"
+theme_override_font_sizes/font_size = 18
+text = "> SYSTEM OVERRIDE_PROCOL"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 
 [node name="WordContainer" type="PanelContainer" parent="CenterContainer/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-
-[node name="Bg" type="ColorRect" parent="CenterContainer/Panel/Margin/VBox/WordContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 0.5)
+theme_override_styles/panel = SubResource("StyleBoxFlat_word_area")
 
 [node name="LabelWrapper" type="CenterContainer" parent="CenterContainer/Panel/Margin/VBox/WordContainer"]
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/Panel/Margin/VBox/WordContainer/LabelWrapper"]
 clip_contents = false
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
 text = "[center][color=#44ff44]ALGO[/color][color=#ffffff]RITHM[/color][/center]"
 fit_content = true
@@ -89,8 +110,8 @@ autowrap_mode = 0
 [node name="Instructions" type="Label" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-theme_override_font_sizes/font_size = 10
-text = "Type code..."
+theme_override_font_sizes/font_size = 12
+text = "[ TYPE THE CODE ABOVE ]"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="CenterContainer/Panel/Margin/VBox"]
@@ -100,20 +121,19 @@ size_flags_vertical = 3
 [node name="HBoxButtons" type="HBoxContainer" parent="CenterContainer/Panel/Margin/VBox"]
 layout_mode = 2
 alignment = 1
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
 [node name="ExitBtn" type="Button" parent="CenterContainer/Panel/Margin/VBox/HBoxButtons"]
-custom_minimum_size = Vector2(80, 30)
+custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_abort")
 text = "ABORT"
 
 [node name="SkipBtn" type="Button" parent="CenterContainer/Panel/Margin/VBox/HBoxButtons"]
-custom_minimum_size = Vector2(80, 30)
+custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
-theme_override_font_sizes/font_size = 10
-text = "AUTO >>"
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_skip")
+text = "AUTO HACK >>"
 
 [connection signal="pressed" from="CenterContainer/Panel/Margin/VBox/HBoxButtons/ExitBtn" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/Margin/VBox/HBoxButtons/SkipBtn" to="." method="_on_skip_pressed"]

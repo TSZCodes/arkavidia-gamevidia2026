@@ -1,6 +1,9 @@
 class_name StockData
 extends Resource
 
+# Stock Data - Individual Stock Resource
+# Contains stock properties and price update logic
+
 @export var company_name: String = "Stock Ltd"
 @export var symbol: String = "STK"
 @export var current_price: float = 100.0
@@ -12,8 +15,6 @@ var price_history: Array[float] = []
 var pending_news_impact: float = 0.0
 var active_news_impact: float = 0.0
 var impact_duration: int = 0
-
-# --- FRIEND'S ADDITION ---
 var hidden_trend_modifier: float = 0.0
 
 func queue_news_impact(strength: float, duration: int) -> void:
@@ -28,7 +29,6 @@ func update_price() -> void:
 		
 	var change_percent = randf_range(-volatility, volatility)
 	
-	# Apply Logic
 	if impact_duration > 0:
 		change_percent += active_news_impact
 		active_news_impact *= 0.5
@@ -36,17 +36,13 @@ func update_price() -> void:
 	else:
 		active_news_impact = 0.0
 		
-	# Apply Friend's Hidden Trend (Social Game)
 	change_percent += hidden_trend_modifier
-	# Slowly reduce the hidden trend back to 0
 	hidden_trend_modifier = move_toward(hidden_trend_modifier, 0.0, 0.01)
 
 	current_price = current_price * (1.0 + change_percent)
 	if current_price < 1.0:
 		current_price = 1.0
 
-# --- FRIEND'S ADDITION ---
 func apply_news_impact(strength: float, _duration_days: int) -> void:
-	# This sets the trend modifier immediately
 	hidden_trend_modifier = strength
 	queue_news_impact(strength, _duration_days)

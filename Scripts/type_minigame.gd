@@ -1,5 +1,8 @@
 extends Control
 
+# Type Minigame - Typing Accuracy Minigame
+# Player must type technical terms correctly to gain insider information
+
 signal minigame_won
 
 const words: Array[String] = [
@@ -21,18 +24,15 @@ func _input(event: InputEvent) -> void:
 		var keycode = event.keycode
 		if event.unicode > 0:
 			var char_str = char(event.unicode)
-			# Only accept letters, and prevent over-typing length of current word
 			if is_valid_letter(char_str):
 				if player_inputs.size() < current_word.length():
-					# Check if the typed character matches the target character
 					var next_char_index = player_inputs.size()
 					if char_str == current_word[next_char_index]:
 						player_inputs.append(char_str)
 						update_display()
 						check_word_finished()
 					else:
-						# Optional: Flash red or shake if wrong? For now just ignore or reset
-						pass 
+						pass
 						
 		elif keycode == KEY_BACKSPACE:
 			if player_inputs.size() > 0:
@@ -46,19 +46,18 @@ func is_valid_letter(chara: String) -> bool:
 	return chara.length() == 1 and chara.to_lower() != chara.to_upper()
 
 func update_display() -> void:
-	if not word_display: return
+	if not word_display:
+		return
 	
 	var typed_str = "".join(player_inputs)
 	var untyped_str = current_word.substr(typed_str.length())
 	
-	# BBCode: Green for typed, Gray for untyped
 	var bbcode = "[center][color=#44ff44]%s[/color][color=#666677]%s[/color][/center]" % [typed_str, untyped_str]
 	word_display.text = bbcode
 
 func check_word_finished() -> void:
 	var typed_str = "".join(player_inputs)
 	if typed_str == current_word:
-		# Small delay for visual satisfaction
 		set_process_input(false)
 		await get_tree().create_timer(0.15).timeout
 		

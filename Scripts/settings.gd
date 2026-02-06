@@ -1,37 +1,51 @@
 extends Control
 
-@export var master_slider : HSlider
-@export var sfx_slider : HSlider
-@export var music_slider : HSlider
+# Settings - Audio & Display Settings
+# Manages volume controls and settings navigation
 
-func _ready():
-	# AUDIO SLIDERS
-	master_slider.value = SaveSystem.get_data().vol_master * 100.0
-	music_slider.value = SaveSystem.get_data().vol_music * 100.0
-	sfx_slider.value = SaveSystem.get_data().vol_sfx * 100.0
+var master_slider: Slider
+var music_slider: Slider
+var sfx_slider: Slider
 
-func _on_back_button_pressed() -> void:
-	if get_tree().paused == true:
-		get_tree().paused = false
-		SceneManager.unoverlay_scene()
+func _ready() -> void:
+	master_slider = find_child("MasterSlider", true, false)
+	music_slider = find_child("MusicSlider", true, false)
+	sfx_slider = find_child("SfxSlider", true, false)
+	
+	if not master_slider:
+		push_error("SETTINGS ERROR: Could not find UI nodes. Make sure node names match exactly: 'MasterSlider', etc.")
+		return
 
-func _on_master_slider_value_changed(value: float) -> void:
-	var safe_vol = value / 100.0
-	var bus_idx = AudioServer.get_bus_index("Master")
-	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(safe_vol))
-	SaveSystem.get_data().vol_sfx = safe_vol
-	SaveSystem.write_data()
+	if not master_slider.value_changed.is_connected(_on_master_changed):
+		master_slider.value_changed.connect(_on_master_changed)
+	if not music_slider.value_changed.is_connected(_on_music_changed):
+		music_slider.value_changed.connect(_on_music_changed)
+	if not sfx_slider.value_changed.is_connected(_on_sfx_changed):
+		sfx_slider.value_changed.connect(_on_sfx_changed)
+	
+	master_slider.value = db_to_linear(AudioServer.get_bus_volume_db(0))
+	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(1))
+	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
 
-func _on_sfx_slider_value_changed(value: float) -> void:
-	var safe_vol = value / 100.0
-	var bus_idx = AudioServer.get_bus_index("SFX")
-	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(safe_vol))
-	SaveSystem.get_data().vol_sfx = safe_vol
-	SaveSystem.write_data()
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		_on_back_pressed()
 
-func _on_music_slider_value_changed(value: float) -> void:
-	var safe_vol = value / 100.0
-	var bus_idx = AudioServer.get_bus_index("Music")
-	if bus_idx != -1: AudioServer.set_bus_volume_db(bus_idx, linear_to_db(safe_vol))
-	SaveSystem.get_data().vol_music = safe_vol
-	SaveSystem.write_data()
+func _on_master_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(0, linear_to_db(value))
+
+func _on_music_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(1, linear_to_db(value))
+
+func _on_sfx_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(2, linear_to_db(value))
+
+func _on_back_pressed() -> void:
+	if has_node("/root/SceneManager"):
+		get_node("/root/SceneManager").go_back()
+	else:
+		queue_free()
+
+func _on_main_menu_pressed() -> void:
+	if has_node("/root/SceneManager"):
+		get_node("/root/SceneManager").switch_scene("res://Scenes/main_menu.tscn")

@@ -1,8 +1,11 @@
 extends Node
 
+# Market Manager - Stock Market Simulation
+# Handles stock generation, price updates, trading, and news events
+
 var all_possible_stocks: Array[StockData] = []
 var active_stocks: Array[StockData] = []
-var max_active_stocks: int = 100 
+var max_active_stocks: int = 100
 
 var good_news_templates = ["partners with tech giant.", "reports record profits.", "launches revolutionary product.", "approved by regulators.", "receives massive investment."]
 var bad_news_templates = ["faces class-action lawsuit.", "suffers major data breach.", "CEO steps down.", "banned in major country.", "misses earnings report."]
@@ -12,13 +15,11 @@ var false_info_chance: float = 0.2
 func _ready() -> void:
 	_generate_custom_stocks()
 	update_active_stocks()
-	# Connect to the event bus for the friend's social game logic
 	if not EventBus.news_released.is_connected(_on_news_received):
 		EventBus.news_released.connect(_on_news_received)
 
 func _generate_custom_stocks() -> void:
 	var definitions = [
-		# Sektor teknologi dan media
 		["Sumsang Electronics", "SSNG", "Teknologi & Media", 1200.0, false],
 		["Xiomay Global", "XMI", "Teknologi & Media", 50.0, false],
 		["Gugle Search & Destroy", "GGL", "Teknologi & Media", 2800.0, false],
@@ -30,7 +31,6 @@ func _generate_custom_stocks() -> void:
 		["NASI", "NASI", "Teknologi & Media", 2000.0, false],
 		["Indigo", "IND", "Teknologi & Media", 25.0, false],
 		
-		# Sektor energi dan SDA
 		["Pertamini Jaya", "PRTM", "Energi & SDA", 500.0, false],
 		["Sawit Makmur Hektaran", "SMH", "Energi & SDA", 80.0, false],
 		["Batu Bara Hitam Pekat", "BBHP", "Energi & SDA", 120.0, false],
@@ -39,18 +39,15 @@ func _generate_custom_stocks() -> void:
 		["Pabrik Semua Kesetrum", "PSK", "Energi & SDA", 220.0, false],
 		["Amateur Biotech Company", "ABC", "Energi & SDA", 15.0, false],
 		
-		# Sektor perbankan dan keuangan
 		["Bank Central Aselole", "BCA", "Perbankan & Keuangan", 850.0, false],
 		["Pinjol Berkedok Kaya", "PBKI", "Perbankan & Keuangan", 5.0, false],
 		["Asuransi Sakit Hati", "ASH", "Perbankan & Keuangan", 40.0, false],
-		["Crypto C nya Cihuy", "CCC", "Perbankan & Keuangan", 0.5, true], 
+		["Crypto C nya Cihuy", "CCC", "Perbankan & Keuangan", 0.5, true],
 		
-		# Sektor infrastruktur dan konstruksi
 		["Waskito atau Waskita", "WWG", "Infrastruktur", 60.0, false],
 		["Semen Keras Kepala", "SKK", "Infrastruktur", 150.0, false],
 		["Tol Langit Permaisuri", "TLP", "Infrastruktur", 90.0, false],
 		
-		# Sektor konsumsi dan retail
 		["PT Makanan Indo", "INDO", "Konsumsi & Retail", 15.0, false],
 		["Unipeler Indonesia", "ULVR", "Konsumsi & Retail", 450.0, false],
 		["Indoapril", "IDAP", "Konsumsi & Retail", 30.0, false],
@@ -58,12 +55,10 @@ func _generate_custom_stocks() -> void:
 		["Rokok Matahari", "RMTH", "Konsumsi & Retail", 65.0, false],
 		["Rokok Cacat", "RCCT", "Konsumsi & Retail", 55.0, false],
 		
-		# Sektor transportasi dan logistik
 		["Ojolali", "OJL", "Transportasi", 12.0, false],
 		["Elang Jawa", "ELJA", "Transportasi", 80.0, false],
 		["Kapal Laut Neptunus", "KLN", "Transportasi", 200.0, false],
 		
-		# Sektor kesehatan
 		["Abioparma", "ABIO", "Kesehatan", 320.0, false],
 		["Payung Corp.", "UMB", "Kesehatan", 666.0, false],
 		["PT Panasea", "PANA", "Kesehatan", 45.0, false]
@@ -92,7 +87,8 @@ func update_active_stocks() -> void:
 			stock.price_history.append(stock.current_price)
 
 func generate_insider_news() -> void:
-	if active_stocks.is_empty(): return
+	if active_stocks.is_empty():
+		return
 	var stock = active_stocks.pick_random()
 	var is_good = randf() > 0.5
 	var volatility_multiplier = randf_range(2.0, 5.0)
@@ -106,7 +102,8 @@ func trigger_market_update() -> void:
 	GameManager.next_day()
 
 func buy_spot(index: int, usd_amount: float) -> void:
-	if index >= active_stocks.size() or usd_amount <= 0: return
+	if index >= active_stocks.size() or usd_amount <= 0:
+		return
 	var stock = active_stocks[index]
 	if GameManager.spend_money(usd_amount):
 		var coins = usd_amount / stock.current_price
@@ -114,7 +111,8 @@ func buy_spot(index: int, usd_amount: float) -> void:
 		GameManager.portfolio[stock.company_name] = current_owned + coins
 
 func sell_spot(index: int, usd_amount: float) -> void:
-	if index >= active_stocks.size() or usd_amount <= 0: return
+	if index >= active_stocks.size() or usd_amount <= 0:
+		return
 	var stock = active_stocks[index]
 	var current_owned = GameManager.portfolio.get(stock.company_name, 0.0)
 	var coins_to_sell = usd_amount / stock.current_price
@@ -127,7 +125,8 @@ func sell_spot(index: int, usd_amount: float) -> void:
 		GameManager.add_money(payout)
 
 func open_futures_position(index: int, usd_margin: float, is_long: bool, leverage: float = 2.0) -> void:
-	if index >= active_stocks.size() or usd_margin <= 0: return
+	if index >= active_stocks.size() or usd_margin <= 0:
+		return
 	var stock = active_stocks[index]
 	if GameManager.futures_positions.has(stock.company_name):
 		GameManager.emit_signal("notif_message", "Close existing " + stock.symbol + " position first!")
@@ -154,21 +153,26 @@ func calculate_futures_pnl(stock_name: String) -> Dictionary:
 		if s.company_name == stock_name:
 			stock = s
 			break
-	if not stock: return {"pnl": 0.0, "pnl_pct": 0.0, "payout": 0.0}
+	if not stock:
+		return {"pnl": 0.0, "pnl_pct": 0.0, "payout": 0.0}
 
 	var price_diff_pct = (stock.current_price - pos.entry_price) / pos.entry_price
-	if not pos.is_long: price_diff_pct *= -1.0
+	if not pos.is_long:
+		price_diff_pct *= -1.0
 	
 	var pnl_pct = price_diff_pct * pos.leverage
 	var payout = pos.margin * (1.0 + pnl_pct)
-	if payout < 0: payout = 0.0
+	if payout < 0:
+		payout = 0.0
 	var profit = payout - pos.margin
 	return {"pnl": profit, "pnl_pct": pnl_pct, "payout": payout}
 
 func close_futures_position(index: int) -> void:
-	if index >= active_stocks.size(): return
+	if index >= active_stocks.size():
+		return
 	var stock = active_stocks[index]
-	if not GameManager.futures_positions.has(stock.company_name): return
+	if not GameManager.futures_positions.has(stock.company_name):
+		return
 	
 	var calc = calculate_futures_pnl(stock.company_name)
 	
@@ -178,24 +182,23 @@ func close_futures_position(index: int) -> void:
 	var sign = "+" if calc.pnl >= 0 else "-"
 	GameManager.emit_signal("notif_message", "Closed " + stock.symbol + ": " + sign + "$" + str(abs(int(calc.pnl))))
 
-# --- SOCIAL GAME SUPPORT (UPDATED) ---
 func apply_insider_info(stock_index: int, impact: float) -> void:
-	if stock_index >= active_stocks.size(): return
+	if stock_index >= active_stocks.size():
+		return
 	var stock = active_stocks[stock_index]
 	
 	var final_impact = impact
 	var is_lie = false
 	
-	# Twist: 20% chance the info is wrong (False Info)
 	if randf() < false_info_chance:
-		final_impact *= -1.0 
+		final_impact *= -1.0
 		is_lie = true
 		
 	stock.hidden_trend_modifier += final_impact
 	
-	# === THIS IS THE FIX: EMIT THE VISUAL SIGNAL ===
 	var msg = "Intel from Social Engineering"
-	if is_lie: msg += " (Source seems suspicious...)"
+	if is_lie:
+		msg += " (Source seems suspicious...)"
 	EventBus.emit_signal("news_released", stock.company_name, final_impact, msg)
 
 func _on_news_received(stock_name: String, impact: float, message: String) -> void:

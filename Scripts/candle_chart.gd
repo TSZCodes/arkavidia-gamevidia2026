@@ -1,5 +1,8 @@
 extends Control
 
+# Candle Chart - Price Visualization
+# Renders price history as a colored area chart with gradient coloring
+
 var history_data: Array = []
 var min_val: float = 0.0
 var max_val: float = 1.0
@@ -23,16 +26,20 @@ func setup_chart(full_history: Array) -> void:
 	var local_min = history_data[0]
 	var local_max = history_data[0]
 	for price in history_data:
-		if price < local_min: local_min = price
-		if price > local_max: local_max = price
+		if price < local_min:
+			local_min = price
+		if price > local_max:
+			local_max = price
 	var diff = local_max - local_min
-	if diff == 0: diff = max(1.0, local_max * 0.01)
+	if diff == 0:
+		diff = max(1.0, local_max * 0.01)
 	min_val = local_min - (diff * PADDING_PERCENT)
 	max_val = local_max + (diff * PADDING_PERCENT)
 	queue_redraw()
 
 func _draw() -> void:
-	if history_data.size() < 2: return
+	if history_data.size() < 2:
+		return
 	var w = size.x
 	var h = size.y
 	var count = history_data.size()
@@ -45,7 +52,8 @@ func _draw() -> void:
 	var poly_points: PackedVector2Array = []
 	poly_points.append(Vector2(0, h))
 	var range_val = max_val - min_val
-	if range_val <= 0.00001: range_val = 1.0
+	if range_val <= 0.00001:
+		range_val = 1.0
 	var step_x = w / max(1, count - 1)
 	for i in range(count):
 		var price = history_data[i]

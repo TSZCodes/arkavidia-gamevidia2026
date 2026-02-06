@@ -1,22 +1,73 @@
-[gd_scene format=3 uid="uid://dghgw26xw5bor"]
+[gd_scene format=3 uid="uid://b8q6y5x4w3e2r"]
 
-[ext_resource type="Texture2D" uid="uid://cy500oqm5s2oi" path="res://Assets/back.png" id="1_4geyq"]
-[ext_resource type="Script" uid="uid://d1aa50u2a4ll4" path="res://Scripts/settings.gd" id="1_i44u3"]
+[ext_resource type="Script" uid="uid://cn2q3y4x5z6a1" path="res://Scripts/settings.gd" id="1_a2b3c"]
 
-[sub_resource type="Theme" id="Theme_eyi13"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4geyq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.13, 0.13, 0.16, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 10
 
-[node name="settings" type="Control" unique_id=210426739]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.2, 0.2, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu"]
+bg_color = Color(0.8, 0.3, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu_hover"]
+bg_color = Color(0.9, 0.4, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_i44u3")
+script = ExtResource("1_a2b3c")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1296520470]
+[node name="Bg" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,130 +75,109 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="." unique_id=1449843626]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.46788195
-anchor_right = 0.5321181
-anchor_bottom = 0.03549383
-offset_left = 17.0
-offset_right = -17.0
-grow_horizontal = 2
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(500, 450)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
 text = "SETTINGS"
-metadata/_edit_use_anchors_ = true
+horizontal_alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="." unique_id=370120905]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.2907986
-anchor_top = 0.40895063
-anchor_right = 0.7005208
-anchor_bottom = 0.6327161
-offset_bottom = -3.0517578e-05
-theme = SubResource("Theme_eyi13")
-metadata/_edit_use_anchors_ = true
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer2" unique_id=1899652628]
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2/MarginContainer" unique_id=1778425194]
+[node name="AudioSection" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-metadata/_edit_use_anchors_ = true
+theme_override_constants/separation = 15
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2/MarginContainer/VBoxContainer" unique_id=1541885082]
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "AUDIO"
 
-[node name="Label" type="Label" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=322340536]
+[node name="MasterBox" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection"]
 layout_mode = 2
-text = "Master"
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=868130642]
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/MasterBox"]
 layout_mode = 2
-theme_override_constants/separation = 74
-theme_override_styles/separator = SubResource("StyleBoxEmpty_4geyq")
+text = "Master Volume"
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer" unique_id=593006001]
+[node name="MasterSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/MasterBox"]
+unique_id_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-show_percentage = false
+max_value = 1.0
+step = 0.05
+value = 1.0
 
-[node name="MasterSlider" type="HSlider" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer/ProgressBar" unique_id=1171318406]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -1.5
-anchor_right = 2.0
-anchor_bottom = 2.5
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer2/MarginContainer/VBoxContainer" unique_id=318331]
+[node name="MusicBox" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection"]
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=796971160]
-layout_mode = 2
-text = "SFX"
-
-[node name="VSeparator2" type="VSeparator" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1840896597]
-layout_mode = 2
-theme_override_constants/separation = 101
-theme_override_styles/separator = SubResource("StyleBoxEmpty_4geyq")
-
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1263215408]
-layout_mode = 2
-size_flags_vertical = 4
-show_percentage = false
-
-[node name="SFXSlider" type="HSlider" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/ProgressBar" unique_id=761651682]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -1.5
-anchor_right = 2.0
-anchor_bottom = 2.5
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer2/MarginContainer/VBoxContainer" unique_id=1175260871]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=1067424574]
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/MusicBox"]
 layout_mode = 2
 text = "Music"
 
-[node name="VSeparator3" type="VSeparator" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=62271150]
+[node name="MusicSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/MusicBox"]
+unique_id_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 82
-theme_override_styles/separator = SubResource("StyleBoxEmpty_4geyq")
+max_value = 1.0
+step = 0.05
+value = 1.0
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3" unique_id=903357297]
+[node name="SfxBox" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection"]
 layout_mode = 2
-size_flags_vertical = 4
-show_percentage = false
 
-[node name="MusicSlider" type="HSlider" parent="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar" unique_id=176018322]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.25
-anchor_top = -1.0
-anchor_right = 2.25
-anchor_bottom = 3.0
-metadata/_edit_use_anchors_ = true
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/SfxBox"]
+layout_mode = 2
+text = "SFX"
 
-[node name="BackButton" type="Button" parent="." unique_id=1355051162]
-layout_mode = 0
-anchor_right = 0.0625
-anchor_bottom = 0.11111111
-offset_right = -64.0
-offset_bottom = -64.0
-icon = ExtResource("1_4geyq")
-metadata/_edit_use_anchors_ = true
+[node name="SfxSlider" type="HSlider" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/AudioSection/SfxBox"]
+unique_id_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.05
+value = 1.0
 
-[connection signal="value_changed" from="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer/ProgressBar/MasterSlider" to="." method="_on_master_slider_value_changed"]
-[connection signal="value_changed" from="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer2/ProgressBar/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
-[connection signal="value_changed" from="PanelContainer2/MarginContainer/VBoxContainer/HBoxContainer3/ProgressBar/MusicSlider" to="." method="_on_music_slider_value_changed"]
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[node name="Spacer" type="Control" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ButtonsBox" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BackBtn" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+text = "BACK"
+
+[node name="MenuBtn" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+text = "EXIT TO MAIN MENU"
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/BackBtn" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonsBox/MenuBtn" to="." method="_on_main_menu_pressed"]

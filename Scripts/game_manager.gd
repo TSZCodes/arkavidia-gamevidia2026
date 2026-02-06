@@ -1,30 +1,26 @@
 extends Node
 
-# Signals
-@warning_ignore_start("unused_signal")
+# Game Manager - Core Game State & Economy
+# Manages player money, debt, portfolio, and game progression
+
 signal money_changed(new_amount)
 signal day_changed(new_day)
 signal debt_changed(new_debt)
 signal notif_message(text)
 
-# Player Economy
 var player_money: float = 1000.0
 var current_day: int = 1
 
-# Debt System
 var debt_amount: float = 100000.0
 var daily_interest_rate: float = 0.05
 var interest_cycle_days: int = 10
 
-# Emergency Loan
 var pinjol_loan_amount: float = 10000.0
 var pinjol_interest_multiplier: float = 1.2
 
-# Investments
 var portfolio: Dictionary = {}
 var futures_positions: Dictionary = {}
 
-# History
 var history_log: Array = []
 
 func _ready() -> void:

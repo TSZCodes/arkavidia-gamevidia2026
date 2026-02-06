@@ -1,17 +1,64 @@
 [gd_scene format=3 uid="uid://b5f3n3dgctu3f"]
 
-[ext_resource type="Script" uid="uid://dq5oq8jbhldjk" path="res://Scripts/main_menu.gd" id="1_28flt"]
+[ext_resource type="Script" uid="uid://dq5oq8jbhldjk" path="res://Scripts/main_menu.gd" id="1_m4n5o"]
 
-[node name="main_menu" type="Control" unique_id=157481123]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_start"]
+bg_color = Color(0.2, 0.6, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_start_hover"]
+bg_color = Color(0.3, 0.7, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0.2, 0.2, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MainMenu" type="Control" unique_id=313472336]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_28flt")
+script = ExtResource("1_m4n5o")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1900843582]
+[node name="Bg" type="Panel" parent="." unique_id=1188331507]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=124375038]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,64 +66,65 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Title" type="Label" parent="." unique_id=2068480000]
-layout_mode = 0
-anchor_left = 0.46006945
-anchor_right = 0.5390625
-anchor_bottom = 0.03549383
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "GAME TITLE"
-metadata/_edit_use_anchors_ = true
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=706993997]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 30
 
-[node name="PlayButton" type="Button" parent="." unique_id=926648091]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.48220485
-anchor_top = 0.47608024
-anchor_right = 0.51779515
-anchor_bottom = 0.52391976
-offset_left = 16.5
-offset_top = 11.5
-offset_right = -16.5
-offset_bottom = -11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Play"
-metadata/_edit_use_anchors_ = true
+[node name="TitleBox" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=829529681]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="SettingsButton" type="Button" parent="." unique_id=202400864]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.45529515
-anchor_top = 0.51929015
-anchor_right = 0.54470485
-anchor_bottom = 0.60262346
-offset_left = 16.5
-offset_top = 11.5
-offset_right = -16.5
-offset_bottom = -11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Settings"
-metadata/_edit_use_anchors_ = true
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer/TitleBox" unique_id=1042446471]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "title?"
+horizontal_alignment = 1
 
-[node name="QuitButton" type="Button" parent="." unique_id=1704099747]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4674479
-anchor_top = 0.5748457
-anchor_right = 0.53255206
-anchor_bottom = 0.658179
-offset_left = 16.5
-offset_top = 11.5
-offset_right = -16.5
-offset_bottom = -11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Quit"
-metadata/_edit_use_anchors_ = true
+[node name="Subtitle" type="Label" parent="CenterContainer/VBoxContainer/TitleBox" unique_id=1638018409]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 16
+text = "by Rawrus"
+horizontal_alignment = 1
 
-[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="Spacer" type="Control" parent="CenterContainer/VBoxContainer" unique_id=240068171]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=909623690]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="StartBtn" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=1169066961]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_start")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_start_hover")
+text = "START GAME"
+
+[node name="SettingsBtn" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=940111294]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "SETTINGS"
+
+[node name="QuitBtn" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=102530718]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "QUIT"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Buttons/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Buttons/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Buttons/QuitBtn" to="." method="_on_quit_btn_pressed"]

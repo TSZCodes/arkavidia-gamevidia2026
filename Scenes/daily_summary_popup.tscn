@@ -1,115 +1,151 @@
-[gd_scene format="3" uid="uid://daily_summary"]
+[gd_scene format=3 uid="uid://daily_summary"]
 
 [ext_resource type="Script" path="res://Scripts/daily_summary_popup.gd" id="1_daily"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.13, 0.13, 0.16, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_confirm"]
+bg_color = Color(0.2, 0.6, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_confirm_hover"]
+bg_color = Color(0.3, 0.7, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_confirm_pressed"]
+bg_color = Color(0.15, 0.45, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="DailySummaryPopup" type="PopupPanel"]
-script = ExtResource("1_daily")
-size = Vector2i(500, 400)
+size = Vector2i(550, 600)
 visible = true
-content_scale_mode = 1
-content_scale_aspect = 2
+transparent_bg = true
+script = ExtResource("1_daily")
 
-[node name="Bg" type="ColorRect" parent="."]
-layout_mode = 1
+[node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 546.0
+offset_bottom = 596.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.15, 0.15, 0.18, 0.95)
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
 
-[node name="Header" type="Label" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 28
 text = "🌙 DAILY SUMMARY"
 horizontal_alignment = 1
 
-[node name="DayLabel" type="Label" parent="VBoxContainer"]
+[node name="DayLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
 theme_override_font_sizes/font_size = 14
 text = "Day 1 → Day 2"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SummaryVBox" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="SummaryVBox" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-theme_override_constants/separation = 5
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
 
-[node name="WalletLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+[node name="WalletLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/SummaryVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 text = "💰 Wallet: $1,000.00"
 
-[node name="AssetsLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+[node name="AssetsLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/SummaryVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 text = "📊 Assets: $0.00"
 
-[node name="TotalLabel" type="Label" parent="VBoxContainer/ScrollContainer/SummaryVBox"]
+[node name="TotalLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/SummaryVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "💎 Total Net Worth: $1,000.00"
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ChangesHeader" type="Label" parent="VBoxContainer"]
+[node name="ChangesHeader" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "📈 ASSET CHANGES"
 horizontal_alignment = 1
 
-[node name="ChangesScroll" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ChangesScroll" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ChangesVBox" type="VBoxContainer" parent="VBoxContainer/ChangesScroll"]
+[node name="ChangesVBox" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ChangesScroll"]
 layout_mode = 2
-theme_override_constants/separation = 3
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
 
-[node name="ChangesLabel" type="Label" parent="VBoxContainer/ChangesScroll/ChangesVBox"]
+[node name="ChangesLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ChangesScroll/ChangesVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 13
 text = "BTC: 0.00 → 0.00 ($0.00)"
 autowrap_mode = 2
 
-[node name="DebtLabel" type="Label" parent="VBoxContainer/ChangesScroll/ChangesVBox"]
+[node name="DebtLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/ChangesScroll/ChangesVBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.3, 0.3, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 text = "💳 Debt: $100,000.00"
 
-[node name="NetChangeLabel" type="Label" parent="VBoxContainer"]
+[node name="NetChangeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 16
 text = "📉 Net Change: +$0.00"
+horizontal_alignment = 1
 
-[node name="CloseBtn" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="CloseBtn" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
-text = "✓ CONTINUE TO NEXT DAY"
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_confirm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_confirm_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_confirm_pressed")
+text = "CONTINUE TO NEXT DAY"

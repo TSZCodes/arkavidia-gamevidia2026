@@ -10,7 +10,7 @@ func load_data():
 		cached_save = SaveData.new()
 		return
 
-	var save := ResourceLoader.load(DEFAULT_SAVE_PATH)
+	var save: SaveData = ResourceLoader.load(DEFAULT_SAVE_PATH)
 	if save == null:
 		# NOTE: Any change made to the SaveData class that conflicts with previous json serializations of it
 		# will result in a fresh SaveData returned when this function is called. Be warned.
