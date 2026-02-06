@@ -24,9 +24,10 @@ func _ready() -> void:
 	if not sfx_slider.value_changed.is_connected(_on_sfx_changed):
 		sfx_slider.value_changed.connect(_on_sfx_changed)
 	
-	master_slider.value = db_to_linear(AudioServer.get_bus_volume_db(0))
-	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(1))
-	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(2))
+	# Initialize sliders with values from AudioManager (Saved Data)
+	master_slider.value = AudioManager.get_volume_linear("Master")
+	music_slider.value = AudioManager.get_volume_linear("Music")
+	sfx_slider.value = AudioManager.get_volume_linear("SFX")
 	
 	# Check if we're in overlay mode (fullscreen settings panel blocking game)
 	var bg = find_child("Bg", true, false)
@@ -43,13 +44,16 @@ func _input(event: InputEvent) -> void:
 		_on_back_pressed()
 
 func _on_master_changed(value: float) -> void:
-	AudioServer.set_bus_volume_db(0, linear_to_db(value))
+	# Use AudioManager to ensure it saves and applies to the correct bus
+	AudioManager.set_volume_linear("Master", value)
 
 func _on_music_changed(value: float) -> void:
-	AudioServer.set_bus_volume_db(1, linear_to_db(value))
+	# Use AudioManager to ensure it saves and applies to the correct bus
+	AudioManager.set_volume_linear("Music", value)
 
 func _on_sfx_changed(value: float) -> void:
-	AudioServer.set_bus_volume_db(2, linear_to_db(value))
+	# Use AudioManager to ensure it saves and applies to the correct bus
+	AudioManager.set_volume_linear("SFX", value)
 
 func _on_back_pressed() -> void:
 	if has_node("/root/SceneManager"):

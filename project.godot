@@ -19,6 +19,10 @@ run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_layout="res://default_audio_bus_layout.tres"
+
 [autoload]
 
 GameManager="*res://Scripts/game_manager.gd"
