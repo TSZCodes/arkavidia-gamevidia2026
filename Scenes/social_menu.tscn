@@ -48,17 +48,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 15
 
-[node name="SpacerTop" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="SpacerTop" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=945510342]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="ScrollContainer/VBoxContainer" unique_id=1110660480]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_post_container")
 
-[node name="MarginContainer" parent="ScrollContainer/VBoxContainer/PanelContainer" unique_id=674365527 instance=ExtResource("1_26g2o")]
+[node name="Post" parent="ScrollContainer/VBoxContainer/PanelContainer" unique_id=1516818183 instance=ExtResource("1_26g2o")]
 layout_mode = 2
 
-[node name="SpacerBottom" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="SpacerBottom" type="Control" parent="ScrollContainer/VBoxContainer" unique_id=2143746566]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2

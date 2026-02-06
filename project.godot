@@ -30,6 +30,7 @@ EventBus="*res://Scripts/event_bus.gd"
 SceneManager="*res://Scripts/SceneManager.gd"
 SaveSystem="*res://Resource/save/save_system.gd"
 AudioManager="*uid://cjp2y0ucrf55q"
+PostJsonReader="*uid://ucum5777sqs8"
 
 [display]
 
