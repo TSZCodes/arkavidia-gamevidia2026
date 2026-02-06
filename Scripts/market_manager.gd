@@ -5,7 +5,7 @@ extends Node
 
 var all_possible_stocks: Array[StockData] = []
 var active_stocks: Array[StockData] = []
-var max_active_stocks: int = 100
+var max_active_stocks: int = 5 # Reduced to 5 as requested
 
 var good_news_templates = ["partners with tech giant.", "reports record profits.", "launches revolutionary product.", "approved by regulators.", "receives massive investment."]
 var bad_news_templates = ["faces class-action lawsuit.", "suffers major data breach.", "CEO steps down.", "banned in major country.", "misses earnings report."]
@@ -19,16 +19,19 @@ func _ready() -> void:
 		EventBus.news_released.connect(_on_news_received)
 
 func _generate_custom_stocks() -> void:
+	# Note: moved "Rocksun" and "NASI" to the TOP (first 5)
+	# ensuring they are prioritized for the social engineering game in the starting 5.
 	var definitions = [
+		["Rocksun", "RKSN", "Teknologi & Media", 110.0, false],
+		["NASI", "NASI", "Teknologi & Media", 2000.0, false],
 		["Sumsang Electronics", "SSNG", "Teknologi & Media", 1200.0, false],
 		["Xiomay Global", "XMI", "Teknologi & Media", 50.0, false],
 		["Gugle Search & Destroy", "GGL", "Teknologi & Media", 2800.0, false],
+		
 		["Ipong", "IPNG", "Teknologi & Media", 180.0, false],
 		["Betaverse", "META", "Teknologi & Media", 300.0, false],
 		["WhyApp", "WHY", "Teknologi & Media", 150.0, false],
 		["Mouse Trap House", "MTH", "Teknologi & Media", 90.0, false],
-		["Rocksun", "RKSN", "Teknologi & Media", 110.0, false],
-		["NASI", "NASI", "Teknologi & Media", 2000.0, false],
 		["Indigo", "IND", "Teknologi & Media", 25.0, false],
 		
 		["Pertamini Jaya", "PRTM", "Energi & SDA", 500.0, false],
@@ -64,7 +67,24 @@ func _generate_custom_stocks() -> void:
 		["PT Panasea", "PANA", "Kesehatan", 45.0, false]
 	]
 	
-	for def in definitions:
+	# Split priority stocks (first 5 to match starting capacity) and the rest
+	var priority_count = 5
+	var priority_defs = []
+	var random_defs = []
+	
+	for i in range(definitions.size()):
+		if i < priority_count:
+			priority_defs.append(definitions[i])
+		else:
+			random_defs.append(definitions[i])
+	
+	# Shuffle the rest to randomize addition order
+	random_defs.shuffle()
+	
+	# Recombine
+	var final_defs = priority_defs + random_defs
+	
+	for def in final_defs:
 		var stock = StockData.new()
 		stock.company_name = def[0]
 		stock.symbol = def[1]
@@ -76,6 +96,7 @@ func _generate_custom_stocks() -> void:
 
 func update_active_stocks() -> void:
 	active_stocks.clear()
+	# Only add up to max_active_stocks from the sorted/shuffled list
 	for i in range(min(max_active_stocks, all_possible_stocks.size())):
 		var stock = all_possible_stocks[i]
 		active_stocks.append(stock)
@@ -86,9 +107,18 @@ func update_active_stocks() -> void:
 				fake_price *= randf_range(0.95, 1.05)
 			stock.price_history.append(stock.current_price)
 
+func expand_market_capacity() -> void:
+	# Add +2 stocks per day until all are visible
+	if max_active_stocks < all_possible_stocks.size():
+		max_active_stocks += 2
+		if max_active_stocks > all_possible_stocks.size():
+			max_active_stocks = all_possible_stocks.size()
+		update_active_stocks()
+
 func generate_insider_news() -> void:
 	if active_stocks.is_empty():
 		return
+	# Picks random from ACTIVE stocks only
 	var stock = active_stocks.pick_random()
 	var is_good = randf() > 0.5
 	var volatility_multiplier = randf_range(2.0, 5.0)
@@ -97,6 +127,9 @@ func generate_insider_news() -> void:
 	EventBus.emit_signal("news_released", stock.company_name, impact, msg)
 
 func trigger_market_update() -> void:
+	# Expand market capacity before updating prices for the next day
+	expand_market_capacity()
+	
 	for stock in active_stocks:
 		stock.update_price()
 	GameManager.next_day()
@@ -182,8 +215,15 @@ func close_futures_position(index: int) -> void:
 	var sign = "+" if calc.pnl >= 0 else "-"
 	GameManager.emit_signal("notif_message", "Closed " + stock.symbol + ": " + sign + "$" + str(abs(int(calc.pnl))))
 
+# Helper to find stock index by symbol (for Social Engineering target)
+func get_stock_index_by_symbol(symbol: String) -> int:
+	for i in range(active_stocks.size()):
+		if active_stocks[i].symbol == symbol:
+			return i
+	return -1
+
 func apply_insider_info(stock_index: int, impact: float) -> void:
-	if stock_index >= active_stocks.size():
+	if stock_index < 0 or stock_index >= active_stocks.size():
 		return
 	var stock = active_stocks[stock_index]
 	

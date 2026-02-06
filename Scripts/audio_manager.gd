@@ -2,13 +2,13 @@ extends Node
 
 # --- Audio Assets ---
 # Preloading the assets found in your uploaded folder
-const STREAM_CLICK = preload("res://Audio/SFX_button_clickr.mp3")
-const STREAM_HOVER = preload("res://Audio/SFX_Button_Hover.mp3")
-const STREAM_NOTIF_GENERIC = preload("res://Audio/sfx_notif_geddit.mp3")
-const STREAM_NOTIF_BAD = preload("res://Audio/sfx_notiff_quakcs.mp3")
-const STREAM_HACKER_WIN = preload("res://Audio/sfx_notif_hackerman.mp3")
-const STREAM_SOCIAL_WIN = preload("res://Audio/sfx_notif_sarjana_teknik_komunikasi.mp3")
-const STREAM_BGM = preload("res://Audio/BGM/thismightbealiltoogroovy.mp3")
+const STREAM_CLICK = preload("res://Audio/SFX/SFX_button_clickr.mp3")
+const STREAM_HOVER = preload("res://Audio/SFX/SFX_Button_Hover.mp3")
+const STREAM_NOTIF_GENERIC = preload("res://Audio/SFX/sfx_notif_geddit.mp3")
+const STREAM_NOTIF_BAD = preload("res://Audio/SFX/sfx_notiff_quakcs.mp3")
+const STREAM_HACKER_WIN = preload("res://Audio/SFX/sfx_notif_hackerman.mp3")
+const STREAM_SOCIAL_WIN = preload("res://Audio/SFX/sfx_notif_sarjana_teknik_komunikasi.mp3")
+const STREAM_BGM = preload("res://Audio/BGM/honestlymaneidk.mp3")
 
 # --- Audio Players ---
 var sfx_click_player: AudioStreamPlayer

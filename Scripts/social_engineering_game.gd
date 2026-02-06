@@ -1,7 +1,8 @@
 extends Node2D
 
 # Signal to tell the dashboard the result (True = Win/Trend Boost, False = Fail)
-signal game_finished(success: bool)
+# Added target_symbol to identify which stock gets the effect
+signal game_finished(success: bool, target_symbol: String)
 
 @export var scenario_type : int
 @export var scroll_container : ScrollContainer
@@ -19,6 +20,7 @@ var option_buttons : Array[Button]
 var correct_button : Array[Button]
 var wrong_button : Array[Button]
 var option_now : int
+var current_target_symbol : String = ""
 
 func _ready() -> void:
 	option_buttons = [option1, option2, option3]
@@ -28,6 +30,13 @@ func _ready() -> void:
 		chat_texts = preload("res://Resource/chat_options.tres")
 		
 	scenario_type = randi_range(0,1)
+	
+	# Assign target stock based on scenario
+	if scenario_type == 0:
+		current_target_symbol = "RKSN" # Rocksun (GTA 6 / Robinson)
+	elif scenario_type == 1:
+		current_target_symbol = "NASI" # NASI (Aliens)
+	
 	option_now = 1
 	if option_now == 1:
 		load_option1(scenario_type)
@@ -211,7 +220,7 @@ func blocked_message() -> void:
 	_disable_buttons()
 	# Emit LOSS signal after delay
 	await get_tree().create_timer(1.5).timeout
-	game_finished.emit(false)
+	game_finished.emit(false, current_target_symbol)
 	queue_free()
 
 func _disable_buttons() -> void:
@@ -228,7 +237,7 @@ func _check_answer(btn: Button) -> void:
 	if btn == correct_button[0]:
 		option_now += 1
 		correct_button.clear()
-		wrong_button.clear() # Clear wrong buttons list for next round
+		wrong_button.clear()
 		
 		if option_now == 2: load_option2(scenario_type)
 		elif option_now == 3: load_option3(scenario_type)
@@ -237,7 +246,7 @@ func _check_answer(btn: Button) -> void:
 			# PLAYER WON!
 			_disable_buttons()
 			await get_tree().create_timer(1.0).timeout
-			game_finished.emit(true)
+			game_finished.emit(true, current_target_symbol)
 			queue_free()
 	else:
 		# Player Lost

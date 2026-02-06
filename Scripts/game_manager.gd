@@ -9,7 +9,7 @@ signal minigame_opportunity(type)
 var player_money: float = 1000.0
 var debt_amount: float = 100000.0
 var current_day: int = 1
-var history_equity: Array = []
+var history_log: Array = []
 
 # Loan restriction
 var loan_taken_today: bool = false
@@ -31,7 +31,7 @@ func add_money(amount: float) -> void:
 	player_money += amount
 	money_changed.emit(player_money)
 
-func subtract_money(amount: float) -> bool:
+func spend_money(amount: float) -> bool:
 	if player_money >= amount:
 		player_money -= amount
 		money_changed.emit(player_money)
@@ -50,7 +50,7 @@ func take_emergency_loan() -> void:
 	
 	money_changed.emit(player_money)
 	debt_changed.emit(debt_amount)
-	notif_message.emit("⚠️ Emergency Loan taken! +$5,000 (Debt +10%)")
+	notif_message.emit("⚠️ Emergency Loan taken!\n+$5,000 (Debt +10%)")
 
 func pay_debt(amount: float) -> void:
 	if amount <= 0: return
@@ -63,9 +63,6 @@ func pay_debt(amount: float) -> void:
 
 func next_day() -> void:
 	current_day += 1
-	# Daily interest
-	debt_amount *= 1.01 
-	
 	# Reset daily limits
 	loan_taken_today = false
 	
@@ -75,15 +72,11 @@ func next_day() -> void:
 	_trigger_daily_minigame()
 
 func log_history(equity: float) -> void:
-	history_equity.append({
+	history_log.append({
 		"day": current_day,
-		"equity": equity
+		"net_worth": equity
 	})
 
 func _trigger_daily_minigame() -> void:
-	# 40% chance of a minigame appearing each day
-	if randf() < 0.4:
-		active_minigame = "type" if randf() < 0.5 else "social"
-		minigame_opportunity.emit(active_minigame)
-	else:
-		active_minigame = ""
+	active_minigame = "type" if randf() < 0.5 else "social"
+	minigame_opportunity.emit(active_minigame)

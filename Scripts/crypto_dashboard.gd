@@ -115,15 +115,13 @@ func _ready() -> void:
 	
 	if market_manager and not market_manager.active_stocks.is_empty():
 		_on_stock_selected(0)
-		
-	# Initialize nav buttons visibility
+
 	_update_nav_buttons()
-	
-	# FIX: Check for missed notifications from GameManager startup
+
 	call_deferred("_check_startup_notifications")
 
 func _check_startup_notifications() -> void:
-	# Check if a minigame is already active in GameManager
+
 	if GameManager.active_minigame != "":
 		_on_minigame_opportunity(GameManager.active_minigame)
 	# Otherwise, if it's day 1, show a welcome message
@@ -533,11 +531,20 @@ func _on_social_game_pressed() -> void:
 	
 	get_tree().root.add_child(active_minigame_layer)
 
-func _on_social_game_finished(success: bool) -> void:
+
+func _on_social_game_finished(success: bool, target_symbol: String = "") -> void:
 	if success:
 		AudioManager.play_social_win()
 		_on_notification_received("Social Engineering Successful! Market Trend Manipulated.")
-		var idx = randi() % market_manager.active_stocks.size()
+		
+		var idx = -1
+		if target_symbol != "":
+			idx = market_manager.get_stock_index_by_symbol(target_symbol)
+		
+		# Fallback if stock not found or not provided (e.g. if it's not active yet, or random)
+		if idx == -1:
+			idx = randi() % market_manager.active_stocks.size()
+			
 		if market_manager.has_method("apply_insider_info"):
 			market_manager.apply_insider_info(idx, 0.15)
 	else:
@@ -595,7 +602,8 @@ func _on_input_usd_text_changed(new_text: String) -> void:
 # =============================================================================
 
 func _on_news_received(stock_name: String, impact: float, message: String) -> void:
-	var impact_str = "📈" if impact > 0 else "📉"
+	# REPLACED WEIRD ARROW CHARACTERS
+	var impact_str = "▲" if impact > 0 else "▼"
 	var color = Color(0.3, 0.9, 0.4) if impact > 0 else Color(0.9, 0.3, 0.3)
 	
 	if impact > 0:
@@ -610,7 +618,8 @@ func _on_news_received(stock_name: String, impact: float, message: String) -> vo
 
 func _on_notification_received(message: String) -> void:
 	AudioManager.play_notification()
-	_add_log_label("🔔 " + message, Color(1, 0.8, 0.4))
+	# REMOVED WEIRD LOGO
+	_add_log_label("! " + message, Color(1, 0.8, 0.4))
 
 func _on_minigame_opportunity(type: String) -> void:
 	var game_name = "Hacker Challenge" if type == "type" else "Social Engineering"
@@ -659,7 +668,7 @@ func _on_next_day_btn_pressed() -> void:
 	var prev_day = GameManager.current_day
 	
 	market_manager.trigger_market_update()
-	GameManager.next_day()
+	# GameManager.next_day() is now called INSIDE market_manager.trigger_market_update()
 	
 	await get_tree().process_frame
 	
@@ -938,7 +947,7 @@ func _on_stock_selected(index: int) -> void:
 		owned_label.modulate = Color(0.4, 0.7, 1.0)
 		var owned = GameManager.portfolio.get(stock.company_name, 0.0)
 		var val = owned * stock.current_price
-		owned_label.text = "💼 You Own: %s ($%s)" % [str(snapped(owned, 0.001)), str(snapped(val, 0.1))]
+		owned_label.text = "You Own: %s ($%s)" % [str(snapped(owned, 0.001)), str(snapped(val, 0.1))]
 	else:
 		_refresh_futures_ui()
 	_calculate_slider_amount()
@@ -968,9 +977,9 @@ func _update_price_graph(stock: Resource) -> void:
 
 func _update_ui(_v = null) -> void:
 	if wallet_label:
-		wallet_label.text = "💰 $" + str(snapped(GameManager.player_money, 0.01))
+		wallet_label.text = "Wallet: $" + str(snapped(GameManager.player_money, 0.01))
 	if debt_label:
-		debt_label.text = "💳 $" + str(snapped(GameManager.debt_amount, 0.01))
+		debt_label.text = "Debt: $" + str(snapped(GameManager.debt_amount, 0.01))
 	_calculate_slider_amount()
 
 func _on_btn_buy_pressed() -> void:
