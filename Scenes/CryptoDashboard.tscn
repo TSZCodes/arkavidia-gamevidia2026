@@ -705,7 +705,7 @@ theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_minigame_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_minigame_normal")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_minigame_hover")
-text = "TYPING MINIGAME"
+text = "HACKER CHALLENGE"
 
 [node name="ButtonAudio" type="Node" parent="RootVBox/ScreenViewport/ScreensContainer/Screen2/RightPanel/MinigamePanel/MarginContainer/MinigameVBox/TypeGameBtn" unique_id=1322817235]
 script = ExtResource("3_audio")

@@ -21,7 +21,11 @@ var portfolio: Dictionary = {}
 var futures_positions: Dictionary = {}
 
 # Minigame state
-var active_minigame: String = "" # "", "type", "social"
+var active_minigame: String = "" # "", "type", "social", "social_feed"
+
+# Social feed - locked insider stock for the day
+var locked_insider_stock: String = ""
+var insider_stock_day: int = 0
 
 func _ready() -> void:
 	randomize()
@@ -65,6 +69,9 @@ func next_day() -> void:
 	current_day += 1
 	# Reset daily limits
 	loan_taken_today = false
+	# Reset social feed insider stock
+	locked_insider_stock = ""
+	insider_stock_day = 0
 	
 	day_changed.emit(current_day)
 	debt_changed.emit(debt_amount)

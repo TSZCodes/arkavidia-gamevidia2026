@@ -1020,7 +1020,7 @@ func _on_day_changed(_d) -> void:
 func _on_social_game_btn_2_pressed() -> void:
 	# Social Media Feed can only be played when it's the daily opportunity
 	if GameManager.active_minigame != "social_feed" and GameManager.active_minigame != "":
-		var game_name = "Social Media Feed" if GameManager.active_minigame == "type" else "Social Engineering"
+		var game_name = "Hacker Challenge" if GameManager.active_minigame == "type" else "Social Engineering"
 		_get_notif_popup().show_notification("Today's opportunity is: " + game_name + ". Play that one instead!")
 		return
 	

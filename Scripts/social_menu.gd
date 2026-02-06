@@ -180,10 +180,33 @@ func _load_posts() -> void:
 	# Get active stocks from market manager
 	var active_stock_symbols = _get_active_stock_symbols()
 	
-	# Randomly select only 1 stock from user's holdings
-	if active_stock_symbols.size() > 0:
-		active_stock_symbols.shuffle()
-		affected_stocks = [active_stock_symbols[0]]  # Only 1 random stock
+	# First, find stocks that have tweets
+	var stocks_with_tweets = []
+	for symbol in active_stock_symbols:
+		for tweet in tweets:
+			var mentioned_symbol = _check_stock_mentions(tweet.content_text, tweet.original_text if tweet.is_repost else "")
+			if mentioned_symbol == symbol:
+				stocks_with_tweets.append(symbol)
+				break
+	
+	# Check if we already have a locked stock for today
+	if GameManager.insider_stock_day == GameManager.current_day and GameManager.locked_insider_stock != "":
+		# Use the locked stock if it has tweets, otherwise pick one that has tweets
+		if GameManager.locked_insider_stock in stocks_with_tweets:
+			affected_stocks = [GameManager.locked_insider_stock]
+		else:
+			# Locked stock has no tweets, pick a new one from stocks with tweets
+			stocks_with_tweets.shuffle()
+			if stocks_with_tweets.size() > 0:
+				GameManager.locked_insider_stock = stocks_with_tweets[0]
+				GameManager.insider_stock_day = GameManager.current_day
+				affected_stocks = [GameManager.locked_insider_stock]
+	elif stocks_with_tweets.size() > 0:
+		# Randomly select only 1 stock from user's holdings and lock it
+		stocks_with_tweets.shuffle()
+		GameManager.locked_insider_stock = stocks_with_tweets[0]
+		GameManager.insider_stock_day = GameManager.current_day
+		affected_stocks = [GameManager.locked_insider_stock]
 	
 	# Filter tweets to only show the selected 1 stock
 	var filtered_tweets = []
@@ -324,39 +347,30 @@ func _show_stock_indicator() -> void:
 	post_container.move_child(indicator, 1)
 
 func _apply_insider_effects() -> void:
-	# Apply insider news effects to only 1 random stock from the feed
+	# Apply insider news effects to only the stock shown in the feed
 	var market_manager = get_tree().root.get_node_or_null("Main/MarketManager")
 	if not market_manager:
 		return
 	
-	# Filter to only active stocks
-	var active_mentioned = []
-	for symbol in affected_stocks:
-		var idx = market_manager.get_stock_index_by_symbol(symbol)
+	# Get the selected stock before clearing
+	var selected_stock = ""
+	if affected_stocks.size() > 0:
+		selected_stock = affected_stocks[0]
+	
+	# Clear affected stocks now
+	affected_stocks.clear()
+	
+	# Only apply to the 1 selected stock
+	if selected_stock != "":
+		var idx = market_manager.get_stock_index_by_symbol(selected_stock)
 		if idx != -1:
-			active_mentioned.append(symbol)
-	
-	# Remove duplicates
-	var unique_stocks = []
-	for s in active_mentioned:
-		if not s in unique_stocks:
-			unique_stocks.append(s)
-	
-	# Only apply to 1 random stock
-	if unique_stocks.size() > 0:
-		unique_stocks.shuffle()
-		var selected = unique_stocks.slice(0, 1)  # Only 1 stock
-		
-		for symbol in selected:
-			var idx = market_manager.get_stock_index_by_symbol(symbol)
-			if idx != -1:
-				# Apply positive insider effect (random impact between 5-15%)
-				var impact = randf_range(0.05, 0.15)
-				market_manager.apply_insider_info(idx, impact)
-		
-		# Store for notification
-		EventBus.emit_signal("news_released", "Social Media", 0.02, \
-			"Insider intel gained on: " + ", ".join(selected))
+			# Apply positive insider effect (random impact between 5-15%)
+			var impact = randf_range(0.05, 0.15)
+			market_manager.apply_insider_info(idx, impact)
+			
+			# Store for notification
+			EventBus.emit_signal("news_released", "Social Media", 0.02, \
+				"Insider intel gained on: " + selected_stock)
 
 func _on_back_btn_pressed() -> void:
 	# Apply insider effects before closing
